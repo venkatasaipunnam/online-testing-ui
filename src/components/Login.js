@@ -9,13 +9,12 @@ const Login = () => {
     const [error, setError] = useState('');
     const [touchedEmail, setTouchedEmail] = useState(false);
     const [touchedPassword, setTouchedPassword] = useState(false);
+    const [showPassword, setShowPassword] = useState(false);
     const navigate = useNavigate();
 
     const validateForm = () => {
-        // Reset error message
         setError('');
 
-        // Check if email and password are provided
         if (!email && touchedEmail) {
             return 'Please enter your email.';
         }
@@ -24,13 +23,11 @@ const Login = () => {
             return 'Please enter your password.';
         }
 
-        // Validate email format
         const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
         if (email && !emailPattern.test(email) && touchedEmail) {
             return 'Please enter a valid email address.';
         }
 
-        // Validate password length
         if (password && password.length < 8 && touchedPassword) {
             return 'Password must be at least 8 characters long.';
         }
@@ -41,15 +38,13 @@ const Login = () => {
     const handleSubmit = (e) => {
         e.preventDefault();
 
-        // Validate the form inputs
         const validationError = validateForm();
         if (validationError) {
             setError(validationError);
             return; // Stop the submission process
         }
 
-        // Redirect to the home page on successful login
-        navigate('/home'); // Change to home page
+        navigate('/home'); // Redirect to home page on successful login
     };
 
     return (
@@ -66,14 +61,15 @@ const Login = () => {
                             id="email"
                             value={email}
                             onChange={(e) => setEmail(e.target.value)}
-                            onBlur={() => setTouchedEmail(true)} // Set touched state on blur
+                            onBlur={() => setTouchedEmail(true)}
+                            placeholder="your@email.com"
                             required
                         />
                     </div>
-                    {touchedEmail && !email && ( // Show error message if the field was touched and is empty
+                    {touchedEmail && !email && (
                         <p className="error">Please enter your email.</p>
                     )}
-                    {touchedEmail && email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email) && ( // Show error for invalid email format
+                    {touchedEmail && email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email) && (
                         <p className="error">Please enter a valid email address.</p>
                     )}
                 </div>
@@ -82,18 +78,21 @@ const Login = () => {
                     <div className="input-group">
                         <i className="fas fa-lock"></i>
                         <input
-                            type="password"
+                            type={showPassword ? "text" : "password"}
                             id="password"
                             value={password}
                             onChange={(e) => setPassword(e.target.value)}
-                            onBlur={() => setTouchedPassword(true)} // Set touched state on blur
+                            onBlur={() => setTouchedPassword(true)}
+                            className={touchedPassword && error.includes('Password') ? 'error' : ''}
+                            placeholder="Your Password"
                             required
                         />
+                        
                     </div>
-                    {touchedPassword && !password && ( // Show error message if the field was touched and is empty
+                    {touchedPassword && !password && (
                         <p className="error">Please enter your password.</p>
                     )}
-                    {touchedPassword && password && password.length < 8 && ( // Show error for short password
+                    {touchedPassword && password && password.length < 8 && (
                         <p className="error">Password must be at least 8 characters long.</p>
                     )}
                 </div>
