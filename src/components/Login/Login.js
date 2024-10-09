@@ -4,8 +4,8 @@ import { useNavigate } from 'react-router-dom';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 import './Login.css';
-import { login } from '../services/AuthService'; // Adjust the import path as necessary
-import { AuthContext } from '../context/AuthContext'; 
+import { login } from '../../services/AuthService'; // Adjust the import path as necessary
+import { AuthContext } from '../../context/AuthContext'; 
 
 const Login = () => {
     const [loading, setLoading] = useState(false);
