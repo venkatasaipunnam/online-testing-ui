@@ -12,21 +12,24 @@
 //     });
 // };
 
-// src/services/AuthService.js
+
+import axios from 'axios';
+
+const API_URL = 'https://reqres.in/api/login'; // Replace with your actual API URL
+
 export const login = async (email, password) => {
-    const response = await fetch('https://reqres.in/api/login', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-            email: email, 
-            password: password,
-        }),
-        // credentials: 'include' 
-    });
-
-    if (!response.ok) {
-        throw new Error('Login failed. Please check your credentials.');
+    try {
+        const response = await axios.post(API_URL, {
+            username: email, //eve.holt@reqres.in
+            password: password, //pistol
+            expiresInMins: 30, // optional, defaults to 60
+        }, {
+           // withCredentials: true 
+        });
+        
+        return response.data; // Return the response data
+    } catch (error) {
+        // Handle error appropriately
+        throw new Error(error.response?.data?.message || 'Login failed'); // Provide a fallback error message
     }
-
-    return await response.json(); // Return the response data
 };

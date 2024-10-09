@@ -1,15 +1,17 @@
 // src/components/Login.js
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 import './Login.css';
 import { login } from '../services/AuthService'; // Adjust the import path as necessary
+import { AuthContext } from '../context/AuthContext'; 
 
 const Login = () => {
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState('');
     const navigate = useNavigate();
+    const { login } = useContext(AuthContext);
 
     // Yup validation schema
     const validationSchema = Yup.object().shape({
@@ -27,13 +29,19 @@ const Login = () => {
         // Call the login API from the service
         setLoading(true);
         setError(''); // Reset error state
-
+    
         try {
-            const response = await login(email, password); // Call the login function from authService
-            console.log(response.message); // Log the response message
+            const response = await login(email, password); // Call the login function from AuthService
+            console.log(response); // Log the entire response to see its structure
+            if (response && response.message) { // Check if response and message exist
+                console.log(response.message); // Log the response message
+            } else {
+                console.log("Login successful, but no message returned"); // Handle the absence of a message
+            }
             navigate('/home'); // Redirect to home page on successful login
         } catch (err) {
-            setError(err.message); // Show error if login fails
+            console.error(err); // Log the error for debugging
+            setError(err.response?.data?.message || 'Login failed. Please try again.'); // Show error if login fails
         } finally {
             setLoading(false); // Reset loading state
             setSubmitting(false); // Reset submitting state for Formik
