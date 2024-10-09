@@ -1,103 +1,78 @@
 // src/components/Login.js
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { Formik, Form, Field, ErrorMessage } from 'formik';
+import * as Yup from 'yup';
 import './Login.css';
+import { login } from '../services/AuthService'; // Adjust the import path as necessary
 
 const Login = () => {
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
+    const [loading, setLoading] = useState(false);
     const [error, setError] = useState('');
-    const [touchedEmail, setTouchedEmail] = useState(false);
-    const [touchedPassword, setTouchedPassword] = useState(false);
-    const [showPassword, setShowPassword] = useState(false);
     const navigate = useNavigate();
 
-    const validateForm = () => {
-        setError('');
+    // Yup validation schema
+    const validationSchema = Yup.object().shape({
+        email: Yup.string()
+            .email('Invalid email address')
+            .required('Email is required'),
+        password: Yup.string()
+            //.min(8, 'Password must be at least 8 characters')
+            .required('Password is required'),
+    });
 
-        if (!email && touchedEmail) {
-            return 'Please enter your email.';
+    const handleSubmit = async (values, { setSubmitting }) => {
+        const { email, password } = values; // Destructure values for better readability
+
+        // Call the login API from the service
+        setLoading(true);
+        setError(''); // Reset error state
+
+        try {
+            const response = await login(email, password); // Call the login function from authService
+            console.log(response.message); // Log the response message
+            navigate('/home'); // Redirect to home page on successful login
+        } catch (err) {
+            setError(err.message); // Show error if login fails
+        } finally {
+            setLoading(false); // Reset loading state
+            setSubmitting(false); // Reset submitting state for Formik
         }
-
-        if (!password && touchedPassword) {
-            return 'Please enter your password.';
-        }
-
-        const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        if (email && !emailPattern.test(email) && touchedEmail) {
-            return 'Please enter a valid email address.';
-        }
-
-        if (password && password.length < 8 && touchedPassword) {
-            return 'Password must be at least 8 characters long.';
-        }
-
-        return null; // No errors
-    };
-
-    const handleSubmit = (e) => {
-        e.preventDefault();
-
-        const validationError = validateForm();
-        if (validationError) {
-            setError(validationError);
-            return; // Stop the submission process
-        }
-
-        navigate('/home'); // Redirect to home page on successful login
     };
 
     return (
         <div className="login-container">
             <h2>Login</h2>
-            {error && <p className="error">{error}</p>}
-            <form onSubmit={handleSubmit}>
-                <div>
-                    <label htmlFor="email">Email:</label>
-                    <div className="input-group">
-                        <i className="fas fa-envelope"></i>
-                        <input
-                            type="text"
-                            id="email"
-                            value={email}
-                            onChange={(e) => setEmail(e.target.value)}
-                            onBlur={() => setTouchedEmail(true)}
-                            placeholder="your@email.com"
-                            required
-                        />
-                    </div>
-                    {touchedEmail && !email && (
-                        <p className="error">Please enter your email.</p>
-                    )}
-                    {touchedEmail && email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email) && (
-                        <p className="error">Please enter a valid email address.</p>
-                    )}
-                </div>
-                <div>
-                    <label htmlFor="password">Password:</label>
-                    <div className="input-group">
-                        <i className="fas fa-lock"></i>
-                        <input
-                            type={showPassword ? "text" : "password"}
-                            id="password"
-                            value={password}
-                            onChange={(e) => setPassword(e.target.value)}
-                            onBlur={() => setTouchedPassword(true)}
-                            className={touchedPassword && error.includes('Password') ? 'error' : ''}
-                            placeholder="Your Password"
-                            required
-                        />
-                        
-                    </div>
-                    {touchedPassword && !password && (
-                        <p className="error">Please enter your password.</p>
-                    )}
-                    {touchedPassword && password && password.length < 8 && (
-                        <p className="error">Password must be at least 8 characters long.</p>
-                    )}
-                </div>
-                <button type="submit">Login</button>
-            </form>
+            {error && <p className="error">{error}</p>} {/* Show error message if exists */}
+            <Formik
+                initialValues={{ email: '', password: '' }}
+                validationSchema={validationSchema}
+                onSubmit={handleSubmit}
+            >
+                {({ isSubmitting }) => (
+                    <Form>
+                        <div>
+                            <label htmlFor="email">Email:</label>
+                            <div className="input-group">
+                                <i className="fas fa-envelope"></i>
+                                <Field type="text" id="email" name="email" placeholder="your@email.com" />
+                            </div>
+                            <ErrorMessage name="email" component="p" className="error" />
+                        </div>
+                        <div>
+                            <label htmlFor="password">Password:</label>
+                            <div className="input-group">
+                                <i className="fas fa-lock"></i>
+                                <Field type="password" id="password" name="password" placeholder="Your Password" />
+                            </div>
+                            <ErrorMessage name="password" component="p" className="error" />
+                        </div>
+                        <button type="submit" disabled={loading || isSubmitting}>
+                            {loading ? 'Loading...' : 'Login'} {/* Show loading text if in loading state */}
+                        </button>
+                    </Form>
+                )}
+            </Formik>
             <p className="forgot-password">
                 <a href="#">Forgot Password?</a>
             </p>
