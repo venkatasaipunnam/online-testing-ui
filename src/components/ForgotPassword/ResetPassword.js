@@ -1,4 +1,7 @@
+// src/components/ForgotPassword/ResetPassword.js
+
 import React from 'react';
+import './ResetPassword.css'; // Import your CSS
 import { useParams, useNavigate } from 'react-router-dom';
 import { resetPassword } from '../../services/PasswordResetService'; // Import your service function
 import { ToastContainer, toast } from 'react-toastify';
@@ -29,7 +32,7 @@ const ResetPassword = () => {
       // Call the reset password service and pass the token and new password
       await resetPassword(token, values.password);
       toast.success('Password reset successful! Redirecting to login...');
-      
+
       // Redirect the user to the login page after a short delay
       setTimeout(() => {
         navigate('/login');
@@ -43,7 +46,7 @@ const ResetPassword = () => {
   };
 
   return (
-    <div>
+    <div className="container">
       <h2>Reset Password</h2>
       <Formik
         initialValues={{ password: '', confirmPassword: '' }}
@@ -55,12 +58,12 @@ const ResetPassword = () => {
             <div>
               <label htmlFor="password">New Password:</label>
               <Field type="password" name="password" placeholder="Enter new password" />
-              <ErrorMessage name="password" component="div" style={{ color: 'red' }} />
+              <ErrorMessage name="password" component="div" className="error-message" />
             </div>
             <div>
               <label htmlFor="confirmPassword">Confirm Password:</label>
               <Field type="password" name="confirmPassword" placeholder="Confirm new password" />
-              <ErrorMessage name="confirmPassword" component="div" style={{ color: 'red' }} />
+              <ErrorMessage name="confirmPassword" component="div" className="error-message" />
             </div>
             {/* Enable the button only if passwords match and form is not submitting */}
             <button type="submit" disabled={isSubmitting || values.password !== values.confirmPassword}>

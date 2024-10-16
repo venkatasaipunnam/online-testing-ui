@@ -1,4 +1,7 @@
+// src/components/ForgotPassword/ForgotPassword.js
+
 import React from 'react';
+import './ForgotPassword.css'; // Import your CSS
 import * as Yup from 'yup';
 import { useFormik } from 'formik';
 import { requestPasswordReset } from '../../services/PasswordResetService'; // Use new service file
@@ -8,11 +11,13 @@ const ForgotPassword = () => {
   const formik = useFormik({
     initialValues: { email: '' },
     validationSchema: Yup.object({
-      email: Yup.string().email('Invalid email format').required('Required'),
+      email: Yup.string()
+        .email('Invalid email format')
+        .required('Required'),
     }),
     onSubmit: async (values) => {
       try {
-        await requestPasswordReset(values.email);  // Use the new service function
+        await requestPasswordReset(values.email); // Use the new service function
         toast.success('Password reset email sent!');
       } catch (error) {
         toast.error(error.message);
@@ -21,9 +26,10 @@ const ForgotPassword = () => {
   });
 
   return (
-    <div>
+    <div className="container">
       <h2>Forgot Password</h2>
       <form onSubmit={formik.handleSubmit}>
+        <label htmlFor="email">Email Address:</label>
         <input
           type="email"
           name="email"
@@ -32,9 +38,11 @@ const ForgotPassword = () => {
           placeholder="Enter your email"
         />
         {formik.errors.email && formik.touched.email && (
-          <div>{formik.errors.email}</div>
+          <div className="error-message">{formik.errors.email}</div>
         )}
-        <button type="submit">Send Password Reset Email</button>
+        <button type="submit" disabled={formik.isSubmitting}>
+          Send Password Reset Email
+        </button>
       </form>
       <ToastContainer />
     </div>
