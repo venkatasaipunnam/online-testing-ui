@@ -1,0 +1,92 @@
+.signup-form {
+    display: grid;
+    grid-template-columns: 1fr; /* Single column layout */
+    gap: 15px;
+    max-width: 400px;
+    margin: 0 auto; /* Center the form */
+    padding: 30px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    background-color: #ffffff; 
+  }
+  
+  .signup-form h2 {
+    text-align: center;
+    margin-bottom: 20px;
+    color: #333; 
+  }
+  
+  .signup-form label {
+    display: block; /* Ensure labels are block-level elements */
+    font-weight: bold;
+    color: #555; /* Subtle gray for labels */
+    margin-bottom: 5px; /* Add space below labels */
+  }
+  
+  .signup-form input {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 16px;
+    transition: border-color 0.3s;
+    width: 100%; 
+  }
+  
+  .signup-form input:focus {
+    border-color: #007bff; 
+    outline: none; 
+  }
+  
+  .signup-form .error {
+    color: red;
+    font-size: 12px;
+  }
+  
+  .signup-form button {
+    padding: 12px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s;
+  }
+  
+  .signup-form button:hover {
+    background-color: #0056b3; /* Darker blue on hover */
+  }
+  
+  .signup-form input[type="checkbox"] {
+    margin-right: 5px; /* Space between checkbox and text  */
+  }
+  
+  /* Media Queries for responsiveness */
+  @media (max-width: 768px) { /* Tablet breakpoint */
+    .signup-form {
+      padding: 20px;
+    }
+  }
+  
+  @media (max-width: 480px) { /* Mobile breakpoint */
+    .signup-form {
+      padding: 15px;
+    }
+  
+    .signup-form button {
+      padding: 10px;
+    }
+  }
+
+  /* For Toast container */
+  .custom-toast-container {
+    max-width: 300px; /* Set the maximum width */
+    width: auto; /* Allow width to adjust automatically */
+  }
+
+  .toastify {
+    white-space: nowrap; /* Prevents text from wrapping */
+  }
+  
+  
