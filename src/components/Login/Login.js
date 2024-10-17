@@ -1,17 +1,26 @@
 // src/components/Login.js
-import React, { useState, useContext } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 import './Login.css';
 import { login } from '../../services/AuthService'; // Adjust the import path as necessary
 import { AuthContext } from '../../context/AuthContext'; 
+import Cookies from 'js-cookie'; // Import js-cookie to manage cookies
 
 const Login = () => {
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState('');
     const navigate = useNavigate();
     const { login } = useContext(AuthContext);
+
+    // Check if sessionId exists in cookies and redirect to home if so
+    useEffect(() => {
+        const sessionId = Cookies.get('sessionId'); // Get sessionId from cookies
+        if (sessionId) {
+            navigate('/home'); // If sessionId exists, redirect to home page
+        }
+    }, [navigate]); // Run this effect only when the component mounts
 
     // Yup validation schema
     const validationSchema = Yup.object().shape({
@@ -26,19 +35,18 @@ const Login = () => {
     const handleSubmit = async (values, { setSubmitting }) => {
         const { email, password } = values; // Destructure values for better readability
 
-        // Call the login API from the service
         setLoading(true);
         setError(''); // Reset error state
     
         try {
             const response = await login(email, password); // Call the login function from AuthService
-            console.log(response); // Log the entire response to see its structure
-            if (response && response.message) { // Check if response and message exist
-                console.log(response.message); // Log the response message
+            if (response && response.session) {
+                // Store the session ID in cookies
+                Cookies.set('sessionId', response.session.sessionId, { expires: 1 }); // Expires in 1 day
+                navigate('/home'); // Redirect to home page on successful login
             } else {
-                console.log("Login successful, but no message returned"); // Handle the absence of a message
+                console.log("Login successful, but no session data returned"); 
             }
-            navigate('/home'); // Redirect to home page on successful login
         } catch (err) {
             console.error(err); // Log the error for debugging
             setError(err.response?.data?.message || 'Login failed. Please try again.'); // Show error if login fails
