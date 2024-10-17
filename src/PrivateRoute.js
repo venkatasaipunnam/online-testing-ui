@@ -1,10 +1,18 @@
 // src/components/PrivateRoute.js
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Navigate } from 'react-router-dom';
-import { useAuth } from './context/AuthContext';
+import { useAuth } from './context/AuthContext'; 
+import Cookies from 'js-cookie'; 
 
 const PrivateRoute = ({ children }) => {
-    const { isAuthenticated } = useAuth(); // Get the authentication state from context
+    const { isAuthenticated, login } = useAuth(); 
+
+    useEffect(() => {
+        const sessionId = Cookies.get('sessionId'); 
+        if (sessionId) {
+            login(); // If sessionId exists, set isAuthenticated to true
+        }
+    }, [login]);
 
     return isAuthenticated ? children : <Navigate to="/" />;
 };
