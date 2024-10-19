@@ -1,13 +1,16 @@
 // src/components/ForgotPassword/ForgotPassword.js
 
 import React from 'react';
-import './ForgotPassword.css'; // Import your CSS
-import * as Yup from 'yup';
 import { useFormik } from 'formik';
-import { requestPasswordReset } from '../../services/PasswordResetService'; // Use new service file
+import * as Yup from 'yup';
+import { requestPasswordReset } from '../../services/PasswordResetService';
 import { ToastContainer, toast } from 'react-toastify';
+import { useNavigate } from 'react-router-dom'; // Import useNavigate
+import './ForgotPassword.css'; // Import your CSS
 
 const ForgotPassword = () => {
+  const navigate = useNavigate(); // Initialize useNavigate
+
   const formik = useFormik({
     initialValues: { email: '' },
     validationSchema: Yup.object({
@@ -17,8 +20,21 @@ const ForgotPassword = () => {
     }),
     onSubmit: async (values) => {
       try {
-        await requestPasswordReset(values.email); // Use the new service function
-        toast.success('Password reset email sent!');
+        const result = await requestPasswordReset(values.email);  //backend returns boolean
+        if (result) { // Check if result is true
+          toast.success('Password reset email sent!');
+
+          setTimeout(()=>{
+            toast.info('Redirecting to login page');
+          }, 1000);
+
+          setTimeout(() => {
+            navigate('/login'); 
+          }, 2000);
+          
+        } else {
+          toast.error('Failed to send reset email');
+        }
       } catch (error) {
         toast.error(error.message);
       }
