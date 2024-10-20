@@ -1,0 +1,121 @@
+/* src/components/Login.css */
+
+body {
+    font-family: Arial, sans-serif;
+    background: linear-gradient(135deg, #74ebd5 0%, #acb6e5 100%);
+    margin: 0;
+    padding: 0;
+}
+
+.login-container {
+    width: 400px;
+    margin: 100px auto;
+    padding: 20px;
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    animation: fadeIn 1s; /* Add animation */
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+h2 {
+    text-align: center;
+    color: #333;
+}
+
+label {
+    display: block;
+    margin: 10px 0 5px;
+}
+
+input[type="text"],
+input[type="password"] {
+    width: 100%;
+    padding: 12px;
+    margin: 5px 0 15px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box;
+}
+
+button {
+    width: 100%;
+    padding: 12px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px; /* Larger font size */
+}
+
+button:hover {
+    background-color: #0056b3;
+}
+
+.error {
+    color: red;
+    text-align: center;
+}
+
+.forgot-password {
+    text-align: center;
+    margin-top: 10px;
+}
+
+
+.input-group {
+    position: relative;
+}
+
+.input-group i {
+    position: absolute;
+    left: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #007bff;
+}
+
+input[type="text"],
+input[type="password"] {
+    padding-left: 30px; /* Space for the icon */
+}
+
+/* Animation Effects */
+button {
+    transition: background-color 0.3s ease, transform 0.2s ease; /* Add transition */
+}
+
+button:hover {
+    background-color: #0056b3;
+    transform: translateY(-2px); /* Add a lift effect */
+}
+
+
+
+/* Responsive styles */
+@media (max-width: 500px) {
+    .login-container {
+        width: 90%;
+        margin: 50px auto;
+    }
+
+    h2 {
+        font-size: 24px; /* Adjust heading size */
+    }
+
+    button {
+        font-size: 14px; /* Adjust button size */
+    }
+}
+
