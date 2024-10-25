@@ -1,0 +1,161 @@
+body {
+    font-family: Arial, sans-serif;
+    background: #f0f0f0;
+    margin: 0;
+    padding: 0;
+}
+
+
+.input-group {
+    position: relative;
+}
+
+.input-group i {
+    position: absolute;
+    left: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #007bff;
+}
+
+label {
+    display: block;
+    margin: 10px 0 5px;
+}
+
+input[type="text"],
+input[type="password"],
+input[type="email"] {
+    width: 100%;
+    padding: 12px 12px 12px 50px;
+    margin: 10px 0 5px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box;
+}
+
+.error-message {
+    color: red;
+    margin-bottom: 10px;
+    font-size: 0.875em;
+}
+
+.signup-container {
+    width: 400px; /* Same width as login */
+    margin: 100px auto;
+    padding: 20px;
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    animation: fadeIn 1s;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.signup-form h2 {
+    text-align: center;
+    color: #333;
+}
+
+.signup-form label {
+    display: block;
+    font-weight: 600;
+    color: #444;
+    margin-bottom: 8px;
+}
+
+.signup-form input,
+.signup-form select {
+    padding: 12px 12px 12px 50px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-size: 15px;
+    transition: border-color 0.3s ease-in-out;
+    width: 100%;
+}
+
+.signup-form input:focus,
+.signup-form select:focus {
+    border-color: #007bff;
+    outline: none;
+}
+
+.signup-form button {
+    padding: 14px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: 600;
+    transition: background-color 0.3s ease-in-out;
+}
+
+.signup-form button:hover {
+    background-color: #0056b3;
+}
+
+.signup-form .error {
+    color: red;
+    font-size: 14px; 
+    margin-top: 4px;
+    display: block; 
+}
+
+@media (max-width: 500px) {
+    .signup-container {
+        width: 90%;
+        margin: 50px auto;
+    }
+
+    .signup-form h2 {
+        font-size: 24px;
+    }
+}
+
+.terms-container {
+    display: flex; /* Use flexbox to align items */
+    align-items: center; 
+    margin-top: 10px; 
+    justify-content: flex-start; /* Align items to the left */
+}
+
+.terms-checkbox {
+    margin-right: 8px; 
+}
+
+.terms-label {
+    font-size: 14px;
+    color: #666; 
+}
+
+.custom-toast-container {
+    max-width: 320px;
+    width: auto;
+}
+
+.toastify {
+    white-space: nowrap;
+}
+
+/* Industry-standard typography */
+.signup-form label, 
+.signup-form input, 
+.signup-form button, 
+.signup-form .checkbox-label {
+    font-family: 'Arial', sans-serif; 
+}
+
+button {
+    margin-top: 10px;
+}
