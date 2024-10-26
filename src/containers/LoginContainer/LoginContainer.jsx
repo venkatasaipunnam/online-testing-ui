@@ -17,7 +17,7 @@ const LoginContainer = () => {
 
     const handleSubmit = async (values, { setSubmitting }) => {
         setLoginError('');
-        
+
         setSubmitting(true);
         try {
             const response = await doLogin(values);
@@ -25,7 +25,7 @@ const LoginContainer = () => {
         } catch (error) {
             console.error('Error logging in:', error);
             setLoginError(error?.response?.data?.message || "An unexpected error occurred.");
-            
+
             setTimeout(() => {
                 setLoginError('');
             }, 5000);
@@ -35,24 +35,27 @@ const LoginContainer = () => {
     };
 
     return (
-        <div className="login-container">
-            <h2>Login</h2>
-            {loginError && <ErrorMessage message={loginError} automationId="login-error" />}
-            <Formik
-                initialValues={{ username: '', emailId: '', password: '', isLoginByEmail }}
-                validationSchema={loginValidationSchema}
-                onSubmit={handleSubmit}
-            >
-                {(formikProps) => (
-                    <LoginForm 
-                        isLoginByEmail={isLoginByEmail}
-                        setLoginWithEmail={setLoginWithEmail}
-                        {...formikProps}
-                    />
-                )}
-            </Formik>
-            <LoginLinks />
+        <div className="login">
+            <div className="login-container">
+                <h2>Login</h2>
+                {loginError && <ErrorMessage message={loginError} automationId="login-error" />}
+                <Formik
+                    initialValues={{ username: '', emailId: '', password: '', isLoginByEmail }}
+                    validationSchema={loginValidationSchema}
+                    onSubmit={handleSubmit}
+                >
+                    {(formikProps) => (
+                        <LoginForm
+                            isLoginByEmail={isLoginByEmail}
+                            setLoginWithEmail={setLoginWithEmail}
+                            {...formikProps}
+                        />
+                    )}
+                </Formik>
+                <LoginLinks />
+            </div>
         </div>
+
     );
 };
 

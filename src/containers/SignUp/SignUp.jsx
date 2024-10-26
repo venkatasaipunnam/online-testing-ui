@@ -35,29 +35,31 @@ const SignUp = () => {
     };
 
     return (
-        <div className="signup-container">
-            {registrationSuccess ? (
-                <SignUpSuccess message="Registration successful!" /> // Show success message
-            ) : (
-                <>
-                    <h2>Register</h2>
-                    {signUpError && <ErrorMessage message={signUpError} automationId="signup-error" />}
+        <div className='signup'>
+            <div className="signup-container">
+                {registrationSuccess ? (
+                    <SignUpSuccess message="Registration successful!" /> // Show success message
+                ) : (
+                    <>
+                        <h2>Register</h2>
+                        {signUpError && <ErrorMessage message={signUpError} automationId="signup-error" />}
 
-                    <Formik
-                        initialValues={{ firstName: '', lastName: '', userName: '', emailId: '', userType: 'STUDENT', createPassword: '', confirmPassword: '' }}
-                        validationSchema={signUpValidationSchema}
-                        validate={(values) => console.log(values)}
-                        onSubmit={handleSubmit}
-                    >
-                        {({ formikProps }) => (
-                            <SignUpForm
-                                {...formikProps}
-                            />
-                        )}
-                    </Formik>
-                    <SignUpLinks />
-                </>
-            )}
+                        <Formik
+                            initialValues={{ firstName: '', lastName: '', userName: '', emailId: '', userType: 'STUDENT', createPassword: '', confirmPassword: '' }}
+                            validationSchema={signUpValidationSchema}
+                            validate={(values) => console.log(values)}
+                            onSubmit={handleSubmit}
+                        >
+                            {({ formikProps }) => (
+                                <SignUpForm
+                                    {...formikProps}
+                                />
+                            )}
+                        </Formik>
+                        <SignUpLinks />
+                    </>
+                )}
+            </div>
         </div>
     );
 };

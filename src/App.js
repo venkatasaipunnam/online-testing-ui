@@ -7,6 +7,7 @@ import ForgotPassword from './containers/ForgetPassword/ForgetPassword';
 import { PrivateRouter } from './PrivateRouter';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import './App.css';
 
 const App = () => {
   return (
