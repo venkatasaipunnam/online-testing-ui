@@ -2,15 +2,20 @@
 import React from 'react';
 import Navbar from '../NavBar/Navbar';
 import './Home.css';
+import HomePage from './HomePage';
+import { useSelector } from 'react-redux';
+import ExamContainer from '../../containers/Exams/ExamContainer';
 
-const Home = () => {
+const Home = (props) => {
+
+    const { path } = props;
+
+    const userState = useSelector((state) => state.user.value)
+
     return (
         <div className='home'>
-            <Navbar />
-            <div style={{ textAlign: 'center', marginTop: '50px' }}>
-                <h1>Login Successful</h1>
-                <p>Welcome to your dashboard!</p>
-            </div>
+            <Navbar user = {userState?.user}/>
+            {path === '/exams'? <ExamContainer /> : <HomePage />}
         </div>
 
     );

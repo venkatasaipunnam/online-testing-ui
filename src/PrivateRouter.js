@@ -45,7 +45,8 @@ export const PrivateRouter = () => {
         <Routes >
             <Route path="/" exact element={<Navigate to='/home' />} />
             <Route path="/change-password" exact element={<ChangePassword />} />
-            <Route path="/home" exact element={<Home />} />
+            <Route path="/home" exact element={<Home path='/home' />} />
+            {/* <Route path="/exams" exact element={<Home path='/exams' />} /> */}
             {/* <Route path="/profile" exact element={<HomeComponent path='/profile' />} /> */}
             <Route path="/logout" exact element={<Logout />} />
             <Route path="*" element={<Navigate to='/home' />} />

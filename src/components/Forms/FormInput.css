@@ -15,9 +15,7 @@ label {
     margin: 10px 0 5px;
 }
 
-input[type="text"],
-input[type="password"],
-input[type="email"] {
+#username, #password, #confirmPassword {
     width: 100%;
     padding: 12px 12px 12px 50px;
     margin: 5px 0 5px;

@@ -1,0 +1,108 @@
+/* CreateTestPage.css */
+.container {
+    padding: 20px;
+}
+
+.question-type-select {
+    margin-bottom: 16px;
+    display: block;
+    width: 100%;
+    padding: 8px;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+}
+
+.input-group {
+    display: flex;
+    align-items: center;
+}
+
+.delete-button,
+.add-option-button,
+.add-question-button,
+.submit-button {
+    margin-left: 8px;
+    padding: 6px 12px;
+    font-size: 0.875rem;
+    /* Adjust font size */
+    border-radius: 4px;
+}
+
+.delete-button {
+    background-color: #f44336;
+    /* Red for delete */
+    color: white;
+}
+
+.add-option-button,
+.add-question-button {
+    background-color: #2196F3;
+    /* Blue for add */
+    color: white;
+}
+
+.submit-button {
+    background-color: #4CAF50;
+    /* Green for submit */
+    color: white;
+}
+
+.error-message {
+    color: red;
+    font-size: 0.875rem;
+}
+
+.exam-info {
+    background: linear-gradient(145deg, #e6e6e6, #ffffff);
+    border-radius: 15px;
+    box-shadow: 20px 20px 60px #c1c1c1,
+        -20px -20px 60px #ffffff;
+    padding: 20px;
+    margin: 20px;
+    transition: all 0.3s ease;
+}
+
+.exam-info:hover {
+    box-shadow: 10px 10px 30px #c1c1c1,
+        -10px -10px 30px #ffffff;
+    transform: translateY(-5px);
+}
+
+label {
+    display: block;
+    margin-top: 10px;
+    font-weight: bold;
+}
+
+input[type="text"],
+input[type="number"],
+input[type="datetime-local"],
+textarea {
+    width: 100%;
+    padding: 10px;
+    margin-top: 5px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-shadow: inset 2px 2px 5px #e0e0e0,
+        inset -2px -2px 5px #ffffff;
+    transition: border-color 0.3s;
+}
+
+input[type="text"]:focus,
+input[type="number"]:focus,
+input[type="datetime-local"]:focus,
+textarea:focus {
+    border-color: #66afe9;
+    outline: none;
+}
+
+
+.create-test {
+    background-color: lightblue;
+    border: 1px solid #ccc;
+    perspective: 1000px;
+    /* Define the perspective */
+    transform-style: preserve-3d;
+    /* Ensure child elements are rendered in 3D space */
+    box-shadow: 10px 10px 20px rgba(0, 0, 0, 0.5);
+}
