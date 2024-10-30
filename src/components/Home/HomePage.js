@@ -9,7 +9,7 @@ import evaluateIcon from '../../assets/exam-grade-icon.jpg'; // Icon for evaluat
 
 const HomePage = () => {
     const userState = useSelector((state) => state.user.value);
-    const isInstructor = userState?.user?.userType === 'STUDENT'; // Check if user is an instructor
+    const isInstructor = userState?.user?.userType === 'INSTRUCTOR'; // Check if user is an instructor
 
     return (
         <Container>
@@ -34,7 +34,7 @@ const HomePage = () => {
                         <img 
                             src={isInstructor ? instructorImage : studentImage} 
                             alt={isInstructor ? "Instructor" : "Student"} 
-                            style={{ width: '20%', height: 'auto', borderRadius: '4px' }} 
+                            style={{ width: '20%', height: 'auto', borderRadius: '4px', placeSelf: 'center' }}  
                         />
                         <Typography variant="h5" marginTop={2}>
                             {isInstructor ? "Create a Test" : "Take a Test"}
@@ -48,7 +48,7 @@ const HomePage = () => {
                             variant="contained" 
                             color="primary" 
                             component={Link} 
-                            to={isInstructor ? "/create-test" : "/test-list"}
+                            to={isInstructor ? "/create-test" : "/exams"}
                             sx={{ marginTop: 2 }}
                         >
                             {isInstructor ? "Go to Create Test" : "View Available Tests"}
@@ -63,7 +63,7 @@ const HomePage = () => {
                             <img 
                                 src={evaluateIcon} 
                                 alt="Evaluate Icon" 
-                                style={{ width: '40px', marginTop: '10px' }} 
+                                style={{ width: '80px', marginTop: '10px', placeSelf: 'center' }}  
                             />
                             <Typography variant="h5" marginTop={2}>
                                 Evaluate Tests
@@ -90,7 +90,7 @@ const HomePage = () => {
                         <img 
                             src={resultIcon} 
                             alt="Result Icon" 
-                            style={{ width: '40px', marginTop: '10px' }} 
+                            style={{ width: '20%', marginTop: '10px', placeSelf: 'center' }} 
                         />
                         <Typography variant="h5" marginTop={2}>
                             {isInstructor ? "Monitor Results" : "Check Your Results"}

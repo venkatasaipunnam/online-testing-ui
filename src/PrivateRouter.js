@@ -8,6 +8,8 @@ import { Logout } from "./containers/LogoutContainer/Logout";
 import Home from "./components/Home/Home";
 import { getSessionId } from "./utils/Helper";
 import ChangePassword from "./containers/ChangePassword/ChangePassword";
+import Dashboard from "./components/Dashboard/Dashboard";
+import ExamDetails from "./components/Tests/Exams/ExamDetails";
 
 export const PrivateRouter = () => {
     const dispatch = useDispatch();
@@ -46,7 +48,11 @@ export const PrivateRouter = () => {
             <Route path="/" exact element={<Navigate to='/home' />} />
             <Route path="/change-password" exact element={<ChangePassword />} />
             <Route path="/home" exact element={<Home path='/home' />} />
-            {/* <Route path="/exams" exact element={<Home path='/exams' />} /> */}
+            <Route path="/exams" exact element={<Home path='/exams' />} />
+            <Route path="/exam/:examId" exact element={<Home path='/exam-details' />} />
+            <Route path="/create-test" exact element={<Home path='/create-test' />} />
+            
+            <Route path="/dashboard" exact element={<Dashboard />} />
             {/* <Route path="/profile" exact element={<HomeComponent path='/profile' />} /> */}
             <Route path="/logout" exact element={<Logout />} />
             <Route path="*" element={<Navigate to='/home' />} />

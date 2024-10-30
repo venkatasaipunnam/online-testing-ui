@@ -1,0 +1,97 @@
+/* General reset for buttons and links */
+button {
+    text-transform: none;
+  }
+  
+  a {
+    text-decoration: none;
+    color: inherit;
+  }
+  
+  /* Navbar styling */
+  .MuiAppBar-root {
+    padding: 10px 0;
+    background-color: #fff;
+    color: #000;
+    border-bottom: 1px solid #e0e0e0;
+  }
+  
+  .MuiToolbar-root .MuiButton-root {
+    color: #000;
+    font-weight: 500;
+  }
+  
+  .MuiToolbar-root .MuiButton-containedPrimary {
+    background-color: #007bff;
+    color: #fff;
+  }
+  
+  .MuiToolbar-root .MuiAvatar-root {
+    margin-left: 10px;
+  }
+  
+  /* Welcome section */
+  .welcome-section {
+    margin: 20px 0;
+  }
+  
+  .welcome-section h4 {
+    font-size: 2rem;
+    font-weight: bold;
+  }
+  
+  .welcome-section p {
+    font-size: 1.1rem;
+    color: #555;
+  }
+  
+  /* Action buttons */
+  .action-buttons .MuiButton-root {
+    font-weight: 500;
+    padding: 8px 16px;
+    border-radius: 20px;
+  }
+  
+  .action-buttons .MuiButton-containedPrimary {
+    background-color: #007bff;
+    color: #fff;
+  }
+  
+  .action-buttons .MuiButton-outlined {
+    color: #555;
+    border-color: #d1d1d1;
+  }
+  
+  /* Exam table styling */
+  .MuiTableContainer-root {
+    margin-top: 20px;
+    border-radius: 10px;
+  }
+  
+  .MuiTable-root .MuiTableCell-root {
+    font-size: 0.9rem;
+    padding: 12px 16px;
+  }
+  
+  .MuiTableHead-root .MuiTableCell-root {
+    font-weight: bold;
+    color: #555;
+    background-color: #f8f9fa;
+  }
+  
+  .MuiTableBody-root .MuiTableRow-root:nth-of-type(odd) {
+    background-color: #f8f9fa;
+  }
+  
+  .MuiTableBody-root .MuiTableRow-root .MuiButton-outlined {
+    color: #007bff;
+    font-weight: 500;
+    border-radius: 15px;
+    padding: 4px 12px;
+  }
+  
+  .MuiTableBody-root .MuiTableRow-root .MuiButton-outlined[disabled] {
+    color: #6c757d;
+    border-color: #d1d1d1;
+  }
+  

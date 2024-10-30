@@ -5,6 +5,8 @@ import './Home.css';
 import HomePage from './HomePage';
 import { useSelector } from 'react-redux';
 import ExamContainer from '../../containers/Exams/ExamContainer';
+import ExamDetails from '../Tests/Exams/ExamDetails';
+import CreateTestPage from '../Tests/CreateTestPage';
 
 const Home = (props) => {
 
@@ -15,7 +17,9 @@ const Home = (props) => {
     return (
         <div className='home'>
             <Navbar user = {userState?.user}/>
-            {path === '/exams'? <ExamContainer /> : <HomePage />}
+            {path === '/exams' ? <ExamContainer /> : 
+            path==='/exam-details' ? <ExamDetails /> :
+            path=== '/create-test' ? <CreateTestPage /> : <HomePage />}
         </div>
 
     );
