@@ -15,8 +15,6 @@ export const PrivateRouter = () => {
     const dispatch = useDispatch();
     const userState = useSelector((state) => state.user.value)
     const [isAuth, setIsAuth] = useState(userState?.isUserAuthenticated);
-    console.log("isAuth : ", isAuth);
-    console.log("userState : ", userState);
     const [isLoading, setIsLoading] = useState(true);
     useEffect(() => {
         const fetchUser = async () => {
@@ -50,6 +48,7 @@ export const PrivateRouter = () => {
             <Route path="/home" exact element={<Home path='/home' />} />
             <Route path="/exams" exact element={<Home path='/exams' />} />
             <Route path="/exam/:examId" exact element={<Home path='/exam-details' />} />
+            <Route path="/exam/update/:examId" exact element={<Home path='/update-exam' />} />
             <Route path="/create-test" exact element={<Home path='/create-test' />} />
             
             <Route path="/dashboard" exact element={<Dashboard />} />

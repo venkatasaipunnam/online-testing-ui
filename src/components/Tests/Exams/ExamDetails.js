@@ -1,38 +1,61 @@
-import React from 'react';
-import { useParams } from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
 import './ExamDetails.css';
+import { useSelector } from 'react-redux';
+import { saveExam } from '../../../redux/reducers/ExamReducers';
+import { useDispatch } from 'react-redux';
+import { getExamDetails } from '../../../redux/actions/ExamActions';
 
-// Sample data structure for exams (for demonstration purposes)
-const examsData = [
-    {
-        id: 1,
-        title: 'Math Exam',
-        description: 'A comprehensive math exam covering algebra and geometry.',
-        totalPoints: 100,
-        duration: 60,
-        startTime: '2024-11-01T10:00',
-        endTime: '2024-11-01T11:00',
-        status: 'Scheduled',
-    },
-    {
-        id: 2,
-        title: 'History Exam',
-        description: 'An exam on world history from the 20th century.',
-        totalPoints: 100,
-        duration: 90,
-        startTime: '2024-11-02T12:00',
-        endTime: '2024-11-02T13:30',
-        status: 'Scheduled',
-    },
-    // Add more exams as needed
-];
 
-const ExamDetails = () => {
-    const { examId } = useParams(); // Get the exam ID from the URL
-    const exam = examsData.find(e => e.id === parseInt(examId)); // Find the exam in the data
+const ExamDetails = (props) => {
+
+    const { role } = props;
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
+
+    const { examId } = useParams();
+    const examData = useSelector((state) => state.exam?.value)
+    const [exams, setExams] = useState(examData.exams);
+    const [exam, setExam] = useState(null);
+    const [isLoading, setIsLoading] = useState(true);
+
+    useEffect(() => {
+
+        const fetchExam = async (examId) => {
+            try {
+                const response = await getExamDetails(examId);
+                dispatch(saveExam(response));
+                console.log("Exam fetched successfully + ", response);
+                setExam(response.data);
+            } catch (error) {
+                console.error("Error : ", error);
+            } finally {
+                setIsLoading(false);
+            }
+        }
+
+        if (isLoading) {
+            if (exams === undefined || exams == [] || exams.length === 0 ) {
+                fetchExam(examId);
+            } else {
+                setExam(exams.find(e => e.examId === parseInt(examId)));
+            }
+        } else {
+            setIsLoading(false);
+        }
+        setExams(examData.exams);
+    }, [examData]);
+
+    const handleExam = () => {
+        if (role === "INSTRUCTOR") {
+            navigate(`/exam/update/${examId}`);
+        } else {
+            navigate(`/exam/${examId}/start`);
+        }
+    }
 
     if (!exam) {
-        return <div>Exam not found.</div>; // Handle case where exam doesn't exist
+        return <div>Exam not found.</div>;
     }
 
     return (
@@ -45,7 +68,7 @@ const ExamDetails = () => {
                 <p><strong>Start Time:</strong> {new Date(exam.startTime).toLocaleString()}</p>
                 <p><strong>End Time:</strong> {new Date(exam.endTime).toLocaleString()}</p>
                 <p><strong>Status:</strong> {exam.status}</p>
-                <button className="start-exam-button">Start Exam</button>
+                <button className="start-exam-button" onClick={() => handleExam()}>{role === "INSTRUCTOR" ? "Update Exam" : "Start Exam"}</button>
             </div>
         </div>
     );

@@ -1,33 +1,62 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import './ExamContainer.css';
 import { useNavigate } from 'react-router-dom';
 
-// Sample data structure for exams
-const examsData = [
-    {
-        id: 1,
-        title: 'Math Exam',
-        description: 'A comprehensive math exam covering algebra and geometry.',
-        totalPoints: 100,
-        duration: 60,
-        startTime: '2024-11-01T10:00',
-        endTime: '2024-11-01T11:00',
-        status: 'Scheduled',
-    },
-    {
-        id: 2,
-        title: 'History Exam',
-        description: 'An exam on world history from the 20th century.',
-        totalPoints: 100,
-        duration: 90,
-        startTime: '2024-11-02T12:00',
-        endTime: '2024-11-02T13:30',
-        status: 'Scheduled',
-    },
-    // Add more exam objects as needed
-];
+import { getCreatedExamDetails, getAssignedExamDetails } from '../../redux/actions/ExamActions';
+import { useDispatch } from'react-redux';
+import { saveExams } from '../../redux/reducers/ExamReducers';
 
-const ExamContainer = () => {
+const ExamContainer = (props) => {
+
+    const { role } = props;
+
+    const [examsData, setExamsData] = useState([]); 
+    const dispatch = useDispatch();
+    const [isLoading, setIsLoading] = useState(true);
+
+    useEffect(() => {
+
+        const fetchCreatedExams = async () => {
+            try {
+                const response = await getCreatedExamDetails();
+                dispatch(saveExams(response));
+                console.log("Exams fetched successfully + ", response);
+                setExamsData(response.data);
+                setIsLoading(false);
+            } catch (error) {
+                console.error("Error : ", error);
+                setIsLoading(false);
+            }finally{
+                setIsLoading(false);
+            }
+        };
+        const fetchAssignedExams = async () => {
+            try {
+                const response = await getAssignedExamDetails();
+                dispatch(saveExams(response));
+                console.log("Exams fetched successfully + ", response);
+                setExamsData(response.data);
+            } catch (error) {
+                console.error("Error : ", error);
+            } finally {
+                setIsLoading(false);
+            }
+        };
+        if (isLoading) {
+            if (role === 'INSTRUCTOR') {
+                fetchCreatedExams();
+            } else if (role === 'STUDENT') {
+                fetchAssignedExams();
+            } else if (role === 'ADMIN') {
+                setIsLoading(false);
+            }
+        }  else {
+            setIsLoading(false);
+        }
+
+
+        
+    }, []); // empty dependency array to run effect only once on mount
 
     const navigate = useNavigate()
 
@@ -37,10 +66,11 @@ const ExamContainer = () => {
         // Here you could use a router to navigate, e.g., using React Router
     };
 
-    return (
-        <div className="exam-container">
+    return  isLoading ? (<>Loading ...</>) : (
+
+            <div className="exam-container">
             {examsData.map((exam) => (
-                <div className="exam-card" key={exam.id}>
+                <div className="exam-card" key={exam.examId}>
                     <h3>{exam.title}</h3>
                     <p>{exam.description}</p>
                     <div className="exam-details">
@@ -52,7 +82,7 @@ const ExamContainer = () => {
                     </div>
                     <button 
                         className="view-button" 
-                        onClick={() => handleViewDetails(exam.id)}
+                        onClick={() => handleViewDetails(exam.examId)}
                     >
                         View Details
                     </button>

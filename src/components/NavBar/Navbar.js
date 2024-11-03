@@ -28,35 +28,21 @@ const Navbar = (props) => {
             <FontAwesomeIcon icon={data.icon} /> <p className='navbar-link'>{data.label}</p>
           </Link>
         ))}
-        {/* <Link to="/home" className="navbar__link">
-          <FontAwesomeIcon icon={faHome} /> <p className='navbar-link'>Home</p>
-        </Link>
-        <Link to="/exams" className="navbar__link">
-          <FontAwesomeIcon icon={faClipboardList} /> <p className='navbar-link'>Exams</p>
-        </Link>
-        <Link to="/grades" className="navbar__link">
-          <FontAwesomeIcon icon={faGraduationCap} /> <p className='navbar-link'>Grades</p>
-        </Link>
-        <Link to="/analysis" className="navbar__link">
-          <FontAwesomeIcon icon={faChartLine} /> <p className='navbar-link'>Analysis</p>
-        </Link> */}
       </div>
 
-      {/* Profile Section */}
       <div className="navbar__profile">
-        <button onClick={toggleProfileMenu} className="navbar__profile-button">
-          <FontAwesomeIcon icon={faUserCircle} /> <p className='navbar-link'>Profile</p>
+        <button onClick={toggleProfileMenu} className="navbar__profile-button" data-automation-id = "user-profile-button">
+          <FontAwesomeIcon icon={faUserCircle} /> <p className='navbar-link'>{user?.firstName + " "+ user?.lastName}</p>
         </button>
         {isProfileOpen && (
           <div className="navbar__profile-menu">
-            <Link to="/profile" className="navbar__profile-item">Profile</Link>
-            <Link to="/changepassword" className="navbar__profile-item">Change Password</Link>
+            <Link to="/profile" className="navbar__profile-item" data-automation-id = "profile-link">Profile</Link>
+            <Link to="/changepassword" className="navbar__profile-item" data-automation-id = "changepassword-link">Change Password</Link>
           </div>
         )}
       </div>
 
-      {/* Logout Button */}
-      <button className="navbar__logout-button" onClick={() => navigate("/logout")}>
+      <button className="navbar__logout-button" data-automation-id = "logout-button" onClick={() => navigate("/logout")}>
         <FontAwesomeIcon icon={faSignOutAlt} className="logout-icon" /> Logout
       </button>
     </nav>

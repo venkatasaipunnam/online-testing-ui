@@ -110,7 +110,8 @@
   .btn-remove-question,
   .btn-add-option,
   .btn-add-question,
-  .btn-save {
+  .btn-save,
+  .btn-cancel {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -123,14 +124,16 @@
   }
   
   .btn-remove-option,
-  .btn-remove-question {
+  .btn-remove-question,
+  .btn-cancel {
     background-color: #dc3545; /* Red for remove buttons */
     color: #fff;
     border: none;
   }
   
   .btn-remove-option:hover,
-  .btn-remove-question:hover {
+  .btn-remove-question:hover,
+  .btn-cancel:hover {
     background-color: #c82333;
   }
   
@@ -198,12 +201,13 @@
     max-width: max-content;
   }
 
-  .remove-option-button, .add-option-button {
+  .remove-option-button, .add-option-button, .save-question-button, .remove-question-button, .edit-question-button, .cancel-question-button {
     margin-left: 10px;
     font-size: 16px;
     cursor: pointer;
     width: max-content;
     border-radius: 10cm;
+    height: max-content;
   }
 
   .add-question-button, .remove-question-button, .save-question-button {

@@ -1,11 +1,16 @@
 import React from 'react';
-import { Formik, Form, FieldArray, Field } from 'formik';
+import { Formik, Form, FieldArray, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrashAlt, faTimes, faPlus, faSave } from '@fortawesome/free-solid-svg-icons';
 import './CreateTestPage.css';
+import { createExam, createQuestion, createOption } from '../../redux/actions/ExamActions';
+import { useState } from 'react';
+import { toast } from 'react-toastify';
 
 const CreateTestPage = () => {
+
+  const [Submitting, setSubmitting] = useState(false);
   const initialValues = {
     title: '',
     description: '',
@@ -18,7 +23,7 @@ const CreateTestPage = () => {
       {
         questionTitle: '',
         questionDetails: '',
-        questionType: 'single',
+        questionType: 'MCQ',
         points: 0,
         options: [
           {
@@ -32,17 +37,10 @@ const CreateTestPage = () => {
 
   const validationSchema = Yup.object().shape({
     title: Yup.string().required('Title is required'),
-    description: Yup.string().required('Description is required'),
     startTime: Yup.date().required('Start time is required').nullable(),
     endTime: Yup.date().required('End time is required').nullable(),
     duration: Yup.string().required('Duration is required'),
-    totalPoints: Yup.number().min(1, 'Total points must be greater than 0').required('Total points are required'),
-    questions: Yup.array().of(
-      Yup.object().shape({
-        questionTitle: Yup.string().required('Question title is required'),
-        points: Yup.number().min(0, 'Points cannot be negative').required('Points are required'),
-      })
-    ),
+    totalPoints: Yup.number().min(1, 'Total points must be greater than 0').required('Total points are required')
   });
 
   const handleCreateExam = (values) => {
@@ -57,9 +55,23 @@ const CreateTestPage = () => {
     // Logic for creating the exam can be added here
   };
 
-  const handleSubmit = (values) => {
-    console.log(JSON.stringify(values, null, 2));
-    // Logic for saving the exam data can be added here
+  const handleSubmit = async (values, { setSubmitting, resetForm }) => {
+    setSubmitting(true);
+    try {
+      values.duration = parseInt(values.duration.split(':')[0]) * 60 + parseInt(values.duration.split(':')[1]);
+      const response = await createExam(values);
+      if (response.status === 200) {
+        toast.success('Exam Created Successfully!');
+        setTimeout(() => {
+          resetForm();
+        }, 1000);
+      }
+    } catch (error) {
+      console.error('Error creating exam:', error);
+      toast.error('Failed to create exam : ' + error?.response?.data?.message);
+    } finally {
+      setSubmitting(false);
+    }
   };
 
   return (
@@ -69,7 +81,9 @@ const CreateTestPage = () => {
       <Formik
         initialValues={initialValues}
         validationSchema={validationSchema}
+        validate={()=>console.log(ErrorMessage)}
         onSubmit={handleSubmit}
+        enableReinitialize
       >
         {({ values, handleChange }) => (
           <Form>
@@ -158,7 +172,17 @@ const CreateTestPage = () => {
                         </div>
                         <div className='form-group column-fields'>
 
-                          {/* Add the Question Type selction dropdown */}
+                          <div className="form-group">
+                            <label htmlFor={`questions.${index}.questionType`}>Question Type</label>
+                            <Field as="select" id={`questions.${index}.questionType`} name={`questions.${index}.questionType`}>
+                              <option value="MCQ">Single Choice</option>
+                              <option value="MSQ">Multiple Choice</option>
+                              <option value="TF">True/False</option>
+                              <option value="ESSAY">Essay</option>
+                              <option value="BLANK">Fill In Blank</option>
+                              <option value="SHORT">Short Answer</option>
+                            </Field>
+                          </div>
 
 
                           <div className="form-group">
@@ -167,9 +191,38 @@ const CreateTestPage = () => {
                           </div>
 
                         </div>
+                        {question.questionType === 'TF' && (
+                          <div className="options-container">
+                            <h4>Options</h4>
+                            <FieldArray name={`questions.${index}.options`}>
+                              {({ push: pushOption, remove: removeOption }) => (
+                                <>
+                                  <div className="option-item" key="true">
+                                    <Field type="text" id={`questions.${index}.options.0.optionText`} name={`questions.${index}.options.0.optionText`} placeholder="True" />
+                                    <Field type="checkbox" name={`questions.${index}.options.0.isCorrect`} />
+                                    <label>Correct</label>
+                                  </div>
+                                  <div className="option-item" key="false">
+                                    <Field type="text" id={`questions.${index}.options.1.optionText`} name={`questions.${index}.options.1.optionText`} placeholder="False" />
+                                    <Field type="checkbox" name={`questions.${index}.options.1.isCorrect`} />
+                                    <label>Correct</label>
+                                  </div>
+                                </>
+                              )}
+                            </FieldArray>
+                          </div>
+                        )}
+
+                        {/* Disable options for other types */}
+                        {['ESSAY', 'BLANK', 'SHORT'].includes(question.questionType) && (
+                          <div className="options-disabled">
+                            <p>Options are not applicable for this question type.</p>
+                          </div>
+                        )}
+
 
                         {/* Options Section */}
-                        <div className="options-container">
+                        {['MCQ', 'MSQ'].includes(question.questionType) && (<div className="options-container">
                           <h4>Options</h4>
                           <FieldArray name={`questions.${index}.options`}>
                             {({ push: pushOption, remove: removeOption }) => (
@@ -206,13 +259,14 @@ const CreateTestPage = () => {
                             )}
                           </FieldArray>
                         </div>
+                        )}
                         <div className='form-group column-fields'>
-                          <button type="button" className="btn-add-question add-question-button" 
-                          onClick={() => push({ questionTitle: '', questionDetails: '', questionType: 'single', points: 0, options: [{ optionText: '', isCorrect: false }] })}>
+                          <button type="button" className="btn-add-question add-question-button"
+                            onClick={() => push({ questionTitle: '', questionDetails: '', questionType: 'single', points: 0, options: [{ optionText: '', isCorrect: false }] })}>
                             Add Question
                           </button>
-                          <button type="button" className="btn-add-question save-question-button" onClick={ () => handleCreateQuestion(values)} >
-                          <FontAwesomeIcon icon={faSave} /> Save Question
+                          <button type="button" className="btn-add-question save-question-button" onClick={() => handleCreateQuestion(values)} >
+                            <FontAwesomeIcon icon={faSave} /> Save Question
                           </button>
                           <button type="button" className="btn-remove-question remove-question-button" onClick={() => remove(index)}>
                             <FontAwesomeIcon icon={faTrashAlt} /> Remove Question
@@ -226,14 +280,14 @@ const CreateTestPage = () => {
                   </>
                 )}
               </FieldArray>
-            </div>
+            </div >
             <button type="submit" className="btn-save">
               <FontAwesomeIcon icon={faSave} /> Save Exam
             </button>
-          </Form>
+          </Form >
         )}
-      </Formik>
-    </div>
+      </Formik >
+    </div >
   );
 };
 
