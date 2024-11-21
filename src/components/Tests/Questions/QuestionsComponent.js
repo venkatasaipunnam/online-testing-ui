@@ -59,14 +59,6 @@ const QuestionsComponent = (props) => {
                                                 setIsEditMode({ ...isEditMode, [index]: !isEditMode[index] });
                                             }} />
                                         }
-                                        {/* {isFieldChanged[optionIndex] &&
-                                        <button type="button" className="btn-add-option add-option-button" title="Save Option" onClick={() => {
-                                            handleUpdateOption(question, option)
-                                            setIsEditMode({ ...isEditMode, [optionIndex]: !isEditMode[optionIndex] });
-                                        }}>
-                                            <FontAwesomeIcon icon={faSave} />
-                                        </button>
-                                    } */}
                                         {isEditMode[index] && <FontAwesomeIcon icon={faSave} className="btn-add-option save-question-button" title="Save Question" onClick={() => {
                                             const isChanged = handleIsChanges({ question: question, questionIndex: index })
                                             if (isChanged) {
@@ -74,6 +66,7 @@ const QuestionsComponent = (props) => {
                                                     handleUpdateQuestion(question);
                                                     setIsFieldChanged({});
                                                 } else {
+                                                    console.log("Creating new question");
                                                     handleCreateQuestion(question);
                                                     setIsFieldChanged({});
                                                 }
@@ -125,18 +118,6 @@ const QuestionsComponent = (props) => {
                                             handleChange({ target: { name: `questions.${index}.questionDetails`, value: e.target.value } })
                                         }
                                         }
-                                    // onBlur={(e) => {
-                                    //     const isChanged = handleIsChanges({ questionIndex: index, field: 'questionDetails', value: e.target.value })
-                                    //     if (isChanged) {
-                                    //         if (question?.questionId) {
-                                    //             handleUpdateQuestion(question);
-                                    //             setIsFieldChanged({});
-                                    //         } else {
-                                    //             handleCreateQuestion(question);
-                                    //             setIsFieldChanged({});
-                                    //         }
-                                    //     }
-                                    // }}
                                     />
                                 </div>
                                 <div className='form-group column-fields'>
@@ -193,12 +174,16 @@ const QuestionsComponent = (props) => {
                                 />
                             </div>
                         ))}
-                        <div className='form-group no-question-add-question'>
+                        {values.questions.length > 0 && (<div className='form-group no-question-add-question'>
                             <button type="button" className="btn-add-question add-question-button"
-                                onClick={() => push({ questionTitle: '', questionDetails: '', questionType: 'MCQ', points: 0, options: [{ optionText: '', isCorrect: false }] })}>
+                                onClick={() => {
+                                    push({ questionTitle: '', questionDetails: '', questionType: 'MCQ', points: 0, options: [] })
+                                    setIsEditMode({ ...isEditMode, [values.questions.length]: !isEditMode[values.questions.length] })
+                                }
+                                }>
                                 Add New Question
                             </button>
-                        </div>
+                        </div>)}
                         {values.questions.length === 0 && (
                             <div className='form-group column-fields no-questions'>
                                 <div className="no-questions-added">
@@ -206,7 +191,11 @@ const QuestionsComponent = (props) => {
                                 </div>
                                 <div className='form-group no-question-add-question'>
                                     <button type="button" className="btn-add-question add-question-button"
-                                        onClick={() => push({ questionTitle: '', questionDetails: '', questionType: 'MCQ', points: 0, options: [{ optionText: '', isCorrect: false }] })}>
+                                        onClick={() => {
+                                            push({ questionTitle: '', questionDetails: '', questionType: 'MCQ', points: 0, options: [] })
+                                            setIsEditMode({ ...isEditMode, [values.questions.length]: !isEditMode[values.questions.length] })
+                                        }
+                                        }>
                                         Add New Question
                                     </button>
                                 </div>

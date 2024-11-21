@@ -160,6 +160,14 @@
   .btn-save {
     background-color: #007bff; /* Blue for save */
     color: #fff;
+    font-size: 16px;
+    cursor: pointer;
+    width: max-content;
+    padding: 10px;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  transition: background-color 0.3s ease, transform 0.2s ease;
   }
   
   .btn-save:hover {
@@ -215,6 +223,12 @@
     font-size: 16px;
     cursor: pointer;
     width: max-content;
+    padding: 10px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  transition: background-color 0.3s ease, transform 0.2s ease;
   }
 
   .create-exam {
@@ -256,4 +270,20 @@
     display: flex;
     justify-content: space-between;
     gap: 20px;
+  }
+
+  .add-questions-column-fields{
+    display: flex;
+    justify-content: flex-end;
+    gap: 20px;
+  }
+
+  .create-exam-button {
+    width: max-content;
+    justify-self: center;
+  }
+
+  .add-new-question {
+    width: max-content;
+    justify-self: end;
   }

@@ -2,7 +2,7 @@ import React from 'react';
 import { Formik, Form, FieldArray, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faTrashAlt, faTimes, faPlus, faSave } from '@fortawesome/free-solid-svg-icons';
+import { faTrashAlt, faTimes, faPlus, faSave, faTrash } from '@fortawesome/free-solid-svg-icons';
 import './CreateTestPage.css';
 import { createExam, createQuestion, createOption } from '../../redux/actions/ExamActions';
 import { useState } from 'react';
@@ -49,16 +49,9 @@ const CreateTestPage = () => {
     // Logic for creating the exam can be added here
   };
 
-  const handleCreateQuestion = (values) => {
-    console.log('Creating Question...');
-    console.log('Values', values);
-    // Logic for creating the exam can be added here
-  };
-
   const handleSubmit = async (values, { setSubmitting, resetForm }) => {
     setSubmitting(true);
     try {
-      values.duration = parseInt(values.duration.split(':')[0]) * 60 + parseInt(values.duration.split(':')[1]);
       const response = await createExam(values);
       if (response.status === 200) {
         toast.success('Exam Created Successfully!');
@@ -74,6 +67,27 @@ const CreateTestPage = () => {
     }
   };
 
+  const validateOptions = (question, option, changeName, changeValue) => {
+
+    if (changeName === 'isCorrect') {
+      if (question.questionType === 'MCQ' || question.questionType === 'TF') {
+        let correctOptionsCount = question.options.filter(option => option.isCorrect).length;
+        if (correctOptionsCount >= 1 && changeValue) {
+          toast.error('Only one correct option can be selected.');
+          return false;
+        }
+      }
+    }
+    if (changeName === 'optionText') {
+      let optionTexts = question.options.map(option => option.optionText);
+      if (optionTexts.includes(changeValue)) {
+        toast.error('Option text must be unique.');
+        return false;
+      }
+    }
+    return true;
+  };
+
   return (
     <div className="exam-create-container">
       <h1>Create a New Exam</h1>
@@ -81,7 +95,7 @@ const CreateTestPage = () => {
       <Formik
         initialValues={initialValues}
         validationSchema={validationSchema}
-        validate={()=>console.log(ErrorMessage)}
+        validate={() => console.log(ErrorMessage)}
         onSubmit={handleSubmit}
         enableReinitialize
       >
@@ -119,8 +133,8 @@ const CreateTestPage = () => {
                   <Field type="datetime-local" id="endTime" name="endTime" data-automation-id="create-exam-end-time" />
                 </div>
                 <div className="form-group">
-                  <label htmlFor="duration">Duration (HH:MM)</label>
-                  <Field type="time" id="duration" name="duration" data-automation-id="create-exam-duration" />
+                  <label htmlFor="duration">Duration (Minutes)</label>
+                  <Field type="number" id="duration" name="duration" data-automation-id="create-exam-duration" />
                 </div>
               </div>
               <div className="form-row date-row">
@@ -148,9 +162,9 @@ const CreateTestPage = () => {
                 </div>
 
               </div>
-              <button type="submit" className="btn btn-primary create-exam" onClick={() => handleCreateExam(values)}>
+              {/* <button type="submit" className="btn btn-primary create-exam" onClick={() => handleCreateExam(values)}>
                 <FontAwesomeIcon icon={faSave} /> Save Exam
-              </button>
+              </button> */}
             </div>
 
             {/* Questions Section */}
@@ -159,9 +173,20 @@ const CreateTestPage = () => {
               <FieldArray name="questions">
                 {({ push, remove }) => (
                   <>
+                    {values.questions.length < 1 && (<div className='column-fields'><p>No questions added yet. Click the button to add a new question.</p>
+                      <button className="btn btn-primary add-question-button" onClick={() => push({ questionTitle: '', questionDetails: '', questionType: 'MCQ', points: 0, options: [{ optionText: '', isCorrect: false }] })} > Add Question </button>
+                    </div>)}
+
                     {values.questions.map((question, index) => (
                       <div className="question-item" key={index}>
-                        <h3>Question {index + 1}</h3>
+                        <div className='question-headers'>
+                          <h3 >Question {index + 1}</h3>
+                          <div >
+                            <FontAwesomeIcon icon={faTrash} className="btn-remove-option remove-question-button" title='Delete Question' onClick={() => {
+                              remove(index);
+                            }} />
+                          </div>
+                        </div>
                         <div className="form-group">
                           <label htmlFor={`questions.${index}.questionTitle`}>Question Title</label>
                           <Field type="text" id={`questions.${index}.questionTitle`} name={`questions.${index}.questionTitle`} placeholder="Enter question title" />
@@ -199,13 +224,48 @@ const CreateTestPage = () => {
                                 <>
                                   <div className="option-item" key="true">
                                     <Field type="text" id={`questions.${index}.options.0.optionText`} name={`questions.${index}.options.0.optionText`} placeholder="True" />
-                                    <Field type="checkbox" name={`questions.${index}.options.0.isCorrect`} />
-                                    <label>Correct</label>
+                                    <div className="form-row is-correct-switch-toggle form-group">
+                                      <span className="switch-label">Correct</span>
+                                      <label className="custom-switch" data-automation-id="toggle-iscorrect">
+                                        <Field
+                                          type="checkbox"
+                                          name={`questions.${index}.options.0.isCorrect`}
+                                          checked={question?.options[0]?.isCorrect}
+                                          value={question?.options[0]?.optionText ? question.options[0]?.optionText : 'True'}
+                                          onChange={(e) => {
+                                            const isValidated = validateOptions(question, question.options[0], 'isCorrect', e.target.checked)
+                                            if (isValidated) {
+                                              handleChange({ target: { name: `questions.${index}.options.0.isCorrect`, value: e.target.checked } })
+                                            }
+                                          }
+                                          }
+                                          data-automation-id="option_iscorrect-toggle-input"
+                                        />
+                                        <span className="custom-slider"></span>
+                                      </label>
+                                    </div>
                                   </div>
                                   <div className="option-item" key="false">
                                     <Field type="text" id={`questions.${index}.options.1.optionText`} name={`questions.${index}.options.1.optionText`} placeholder="False" />
-                                    <Field type="checkbox" name={`questions.${index}.options.1.isCorrect`} />
-                                    <label>Correct</label>
+                                    <div className="form-row is-correct-switch-toggle form-group">
+                                      <span className="switch-label">Correct</span>
+                                      <label className="custom-switch" data-automation-id="toggle-iscorrect">
+                                        <Field
+                                          type="checkbox"
+                                          name={`questions.${index}.options.1.isCorrect`}
+                                          checked={question?.options[1]?.isCorrect}
+                                          onChange={(e) => {
+                                            const isValidated = validateOptions(question, question.options[1], 'isCorrect', e.target.checked)
+                                            if (isValidated) {
+                                              handleChange({ target: { name: `questions.${index}.options.1.isCorrect`, value: e.target.checked } })
+                                            }
+                                          }
+                                          }
+                                          data-automation-id="option_iscorrect-toggle-input"
+                                        />
+                                        <span className="custom-slider"></span>
+                                      </label>
+                                    </div>
                                   </div>
                                 </>
                               )}
@@ -227,6 +287,11 @@ const CreateTestPage = () => {
                           <FieldArray name={`questions.${index}.options`}>
                             {({ push: pushOption, remove: removeOption }) => (
                               <>
+                                {question.options.length < 1
+                                  &&
+                                  (
+                                    <button type="button" className="btn-add-option add-option-button" onClick={() => pushOption({ optionText: '', isCorrect: false })}> Add Option </button>
+                                  )}
                                 {question.options.map((option, optionIndex) => (
                                   <div className="option-item" key={optionIndex}>
                                     <div className="form-group option-text">
@@ -239,7 +304,13 @@ const CreateTestPage = () => {
                                           type="checkbox"
                                           name={`questions.${index}.options.${optionIndex}.isCorrect`}
                                           checked={option.isCorrect}
-                                          onChange={(e) => handleChange({ target: { name: `questions.${index}.options.${optionIndex}.isCorrect`, value: e.target.checked } })}
+                                          onChange={(e) => {
+                                            const isValidated = validateOptions(question, option, 'isCorrect', e.target.checked)
+                                            if (isValidated) {
+                                              handleChange({ target: { name: `questions.${index}.options.${optionIndex}.isCorrect`, value: e.target.checked } })
+                                            }
+                                          }
+                                          }
                                           data-automation-id="option_iscorrect-toggle-input"
                                         />
                                         <span className="custom-slider"></span>
@@ -260,18 +331,11 @@ const CreateTestPage = () => {
                           </FieldArray>
                         </div>
                         )}
-                        <div className='form-group column-fields'>
+                        <div className='form-group add-questions-column-fields'>
                           <button type="button" className="btn-add-question add-question-button"
-                            onClick={() => push({ questionTitle: '', questionDetails: '', questionType: 'single', points: 0, options: [{ optionText: '', isCorrect: false }] })}>
+                            onClick={() => push({ questionTitle: '', questionDetails: '', questionType: 'MCQ', points: 0, options: [{ optionText: '', isCorrect: false }] })}>
                             Add Question
                           </button>
-                          <button type="button" className="btn-add-question save-question-button" onClick={() => handleCreateQuestion(values)} >
-                            <FontAwesomeIcon icon={faSave} /> Save Question
-                          </button>
-                          <button type="button" className="btn-remove-question remove-question-button" onClick={() => remove(index)}>
-                            <FontAwesomeIcon icon={faTrashAlt} /> Remove Question
-                          </button>
-
                         </div>
 
                       </div>
@@ -281,9 +345,11 @@ const CreateTestPage = () => {
                 )}
               </FieldArray>
             </div >
-            <button type="submit" className="btn-save">
-              <FontAwesomeIcon icon={faSave} /> Save Exam
+
+            <button type="submit" className="btn-save create-exam-button">
+              <FontAwesomeIcon icon={faSave} />  Save Exam
             </button>
+
           </Form >
         )}
       </Formik >

@@ -5,6 +5,7 @@ const initialState = {
     updateExam: undefined,
     exam: undefined,
     exams: [],
+    userExamResponses: undefined,
 
 }
 
@@ -36,8 +37,12 @@ export const examSlice = createSlice({
             console.log('Saving Update exam:', action.payload);
             state.value.updateExam = action.payload.data;
         },
+        
+        saveUserExamResponses: (state, action) => {
+            state.value.userExamResponses = action.payload.data;
+        },
     }
 })
 
-export const { saveExam, saveExams, saveCreateExam, saveUpdateExam } = examSlice.actions;
+export const { saveExam, saveExams, saveCreateExam, saveUpdateExam, saveUserExamResponses } = examSlice.actions;
 export default examSlice.reducer;

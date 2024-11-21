@@ -128,9 +128,10 @@ const UpdateExamContainer = () => {
         if (!('examId' in values) ){
             values['examId'] = exam.examId;
         }
+        values['points'] = parseFloat(values.points);
         const createQuestionData = async () => {
             try {
-                const response = await updateQuestionDetails(values);
+                const response = await createQuestion(values);
                 if (response.status === 200) {
                     toast.success('Question Created Successfully.');
                     // Update the question options in the exam

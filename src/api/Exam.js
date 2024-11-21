@@ -12,5 +12,9 @@ export const ExamApis={
     getExamDetailsByIdEndPoint: '/exam/get',
     getAllCreatedExamsEndPoint:'/exam/created',
     AssignExamToUsersEndPoint:'/exam/assign',
+    startExamEndPoint:'/exam/start',
+    endExamEndPoint:'/exam/end',
+    saveUserExamResponse: '/exam/response/save',
+    getUserExamResponse: '/exam/response/get'
 
 }

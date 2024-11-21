@@ -8,6 +8,14 @@ import ExamContainer from '../../containers/Exams/ExamContainer';
 import ExamDetails from '../Tests/Exams/ExamDetails';
 import CreateTestPage from '../Tests/CreateTestPage';
 import UpdateExamContainer from '../../containers/Exams/UpdateExamContainer';
+import ExamPage from '../../containers/Exams/ExamPage';
+import AssignStudentPage from '../../containers/Exams/AssignStudentPage';
+import UpcomingExamsPage from '../../containers/Exams/UpcomingExamsPage';
+import ProfilePage from '../../containers/Profile/ProfilePage';
+import ExamGradingPage from '../../containers/Evaluation/ExamGradingPage';
+import EvaluationPage from '../../containers/Evaluation/EvaluationPage';
+import ListGradesPage from '../../containers/Grade/ListGradesPage';
+import ExamStudentResponses from '../../containers/Evaluation/ExamStudentResponses';
 
 const Home = (props) => {
 
@@ -23,7 +31,16 @@ const Home = (props) => {
             {path === '/exams' ? <ExamContainer role = {user?.userType} /> : 
             path==='/exam-details' ? <ExamDetails role = {user?.userType}/> :
             path==='/update-exam' ? <UpdateExamContainer /> :
-            path=== '/create-test' ? <CreateTestPage role = {user?.userType} /> : <HomePage user = {user} />}
+            path=== '/create-test' ? <CreateTestPage role = {user?.userType} /> : 
+            path=== '/start-test' ? <ExamPage /> : 
+            path=== '/assign-exam' ? <AssignStudentPage /> :
+            path=== '/feedback' ? <ExamStudentResponses /> :
+            path=== '/evaluate-tests' ? <EvaluationPage /> :
+            path=== '/profile' ? <ProfilePage /> :
+            path=== '/grades' ? <ListGradesPage /> :
+            path=== '/grade' ? <ExamGradingPage /> :
+            <HomePage user = {user} />}
+            {path === '/home' && <UpcomingExamsPage role = {user?.userType}/>}
         </div>
 
     );

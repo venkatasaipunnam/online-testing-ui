@@ -19,7 +19,7 @@ const HomePage = () => {
             <Typography variant="h5" gutterBottom>
                 {isInstructor 
                     ? "Manage your tests efficiently and monitor student progress." 
-                    : "Prepare for your tests and track your learning journey."}
+                    : "Prepare for your tests before accessing them directly."}
             </Typography>
             <Box 
                 display="flex" 

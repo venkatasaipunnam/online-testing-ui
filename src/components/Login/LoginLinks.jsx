@@ -8,7 +8,7 @@ const LoginLinks = () => {
             <span className="first-time-user" >
                 First time user? <Link to="/signup" data-automation-id="signup-link">Sign Up</Link>
             </span>
-            <span className="forgot-password">
+            <span className="forgot-password-link">
                 <Link to="/forgot-password" data-automation-id="forgot-password-link">Forgot Password?</Link>
             </span>
         </p>

@@ -4,7 +4,8 @@ import './ExamDetails.css';
 import { useSelector } from 'react-redux';
 import { saveExam } from '../../../redux/reducers/ExamReducers';
 import { useDispatch } from 'react-redux';
-import { getExamDetails } from '../../../redux/actions/ExamActions';
+import { getExamDetails, deleteExam } from '../../../redux/actions/ExamActions';
+import { toast } from 'react-toastify';
 
 
 const ExamDetails = (props) => {
@@ -35,7 +36,7 @@ const ExamDetails = (props) => {
         }
 
         if (isLoading) {
-            if (exams === undefined || exams == [] || exams.length === 0 ) {
+            if (exams === undefined || exams == [] || exams.length === 0) {
                 fetchExam(examId);
             } else {
                 setExam(exams.find(e => e.examId === parseInt(examId)));
@@ -54,6 +55,37 @@ const ExamDetails = (props) => {
         }
     }
 
+    const handleDelete = () => {
+        const performDelete = async () => {
+            try {
+                const response = await deleteExam(examId);
+                if (response.status === 200) {
+                    console.log("Exam deleted successfully");
+                    setExams(exams.filter(e => e.examId !== parseInt(examId)));
+                    toast.success("Exam deleted successfully");
+                    navigate(`/exams`);
+                } else {
+                    console.error("Error during exam deletion");
+                    toast.error("Error during exam deletion");
+                }
+            } catch (error) {
+                console.error("Error during logout", error);
+            }
+        };
+        performDelete();
+    }
+
+    const handleAssign = () => {
+
+        navigate(`/exam/${examId}/assign`);
+    }
+
+    
+    const handleGrades = () => {
+
+        navigate(`/exam/${examId}/feedback`);
+    }
+
     if (!exam) {
         return <div>Exam not found.</div>;
     }
@@ -68,7 +100,27 @@ const ExamDetails = (props) => {
                 <p><strong>Start Time:</strong> {new Date(exam.startTime).toLocaleString()}</p>
                 <p><strong>End Time:</strong> {new Date(exam.endTime).toLocaleString()}</p>
                 <p><strong>Status:</strong> {exam.status}</p>
-                <button className="start-exam-button" onClick={() => handleExam()}>{role === "INSTRUCTOR" ? "Update Exam" : "Start Exam"}</button>
+                {/* {role === "INSTRUCTOR" && (
+                    <div className='exam-card-actions'>
+                        <FontAwesomeIcon className="btn-add-option edit-exam-button" title='Edit Exam' icon={faEdit} onClick={() => handleExam()} />
+                        <FontAwesomeIcon className="btn-add-option delete-exam-button" title='Delete Exam' icon={faTrash} onClick={() => handleDelete()} />
+                    </div>
+                )} */}
+                <div className='exam-column-fields'>
+                    {role === "INSTRUCTOR" &&  exam.status != "COMPLETED" &&
+                    <button className="start-exam-button" disabled={exam.status === "COMPLETED"} onClick={() => handleExam()}>Update Exam</button>}
+                    {role === "INSTRUCTOR" && exam.status === "COMPLETED" &&
+                    <button className="start-exam-button" onClick={() => handleGrades()}>Grade</button>}
+                    {role === "INSTRUCTOR" && exam.status != "COMPLETED" &&
+                    <button className="assign-exam-button" disabled={exam.status === "COMPLETED"} onClick={() => handleAssign()}>Assign Exam</button>}
+                    {role === "INSTRUCTOR" && exam.status != "COMPLETED" &&
+                    <button className="delete-exam-button" disabled={exam.status === "COMPLETED"} onClick={() => handleDelete()}>Delete Exam</button>}
+                    {role === "STUDENT" && exam.status != "COMPLETED" && exam.examIndicator != 'Completed' && <button className="start-exam-button" onClick={() => handleExam()}>Start Exam</button>}
+                    {role === "STUDENT" && exam.status != "COMPLETED" && exam.examIndicator === 'Completed' && <button className="finished-exam-button" disabled={true} onClick={() => {console.log("implment handle results")}}>Exam Finished</button>}
+                    {role === "STUDENT" && exam.status === "COMPLETED" && exam.examIndicator != 'Completed' && <button className="ended-exam-button" disabled={true} onClick={() => {console.log("implment handle results")}}>Exam Ended</button>}
+                    {role === "STUDENT" && exam.status === "COMPLETED" && exam.examIndicator === 'Completed' && <button className="notgraded-exam-button" disabled={true} onClick={() => {console.log("implment handle results")}}>Not Yet Graded</button>}        
+                    
+                </div>
             </div>
         </div>
     );

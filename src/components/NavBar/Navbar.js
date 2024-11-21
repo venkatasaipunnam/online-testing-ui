@@ -14,10 +14,7 @@ const Navbar = (props) => {
     setIsProfileOpen(!isProfileOpen);
   };
 
-  console.log(user);
   const navMenu = Object.entries(NavMiddleMenu[user?.userType]);
-
-  console.log(navMenu);
 
   return (
     <nav className="navbar">
@@ -36,7 +33,7 @@ const Navbar = (props) => {
         </button>
         {isProfileOpen && (
           <div className="navbar__profile-menu">
-            <Link to="/profile" className="navbar__profile-item" data-automation-id = "profile-link">Profile</Link>
+            <Link to="/profile" className="navbar__profile-item" data-automation-id = "profile-link" onClick={()=> {setIsProfileOpen(false)}}>Profile</Link>
             <Link to="/changepassword" className="navbar__profile-item" data-automation-id = "changepassword-link">Change Password</Link>
           </div>
         )}

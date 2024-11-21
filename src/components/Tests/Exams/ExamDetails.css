@@ -6,13 +6,25 @@
 }
 
 .exam-card {
-    max-width: 650px; /* Set a max width for the card */
+    width: 650px; /* Set a max width for the card */
+    height: 350px;
+    max-width: 650px;
     width: 100%; /* Allow it to take full width on smaller screens */
     background: white;
     border-radius: 10px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     padding: 20px;
     transition: transform 0.2s, box-shadow 0.2s;
+    position: relative;
+}
+
+.exam-card-actions {
+    position: absolute;
+    top: 10px;
+    /* Adjust as needed for spacing from the top */
+    right: 10px;
+    /* Adjust as needed for spacing from the right */
+    padding: 8px 16px;
 }
 
 .exam-card:hover {
@@ -40,8 +52,108 @@
     cursor: pointer;
     font-weight: bold;
     transition: background-color 0.3s;
+    width: max-content;
 }
 
 .start-exam-button:hover {
     background-color: #218838;
+}
+
+.assign-exam-button {
+    margin-top: 20px;
+    padding: 10px 15px;
+    background-color: #28a745;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background-color 0.3s;
+    width: max-content;
+}
+
+.assign-exam-button:hover {
+    background-color: #218838;
+}
+
+.delete-exam-button {
+    margin-top: 20px;
+    padding: 10px 15px;
+    background-color: #dc3545;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background-color 0.3s;
+    width: max-content;
+}
+
+.delete-exam-button:hover {
+    background-color: #c82333;
+}
+
+.exam-column-fields {
+    display: flex;
+    justify-content: space-evenly;
+    gap: 20px;
+}
+
+.notgraded-exam-button {
+    background-color: #28a745;
+    width: max-content;
+    place-self: center;
+    min-height: 30px;
+    color: white;
+    border-radius: 15px;
+    padding: 0px 10px 0px 10px;
+}
+
+.notgraded-exam-button:hover {
+    background-color: #1f9b3c;
+    cursor: not-allowed;
+}
+
+.finished-exam-button {
+    background-color: #28a745;
+    width: max-content;
+    place-self: center;
+    min-height: 30px;
+    color: white;
+    border-radius: 15px;
+    padding: 0px 10px 0px 10px;
+}
+
+.finished-exam-button:hover {
+    background-color: #28a745;
+}
+
+.ended-exam-button {
+    background-color: #555;
+    width: max-content;
+    place-self: center;
+    min-height: 30px;
+    color: white;
+    border-radius: 15px;
+    padding: 0px 10px 0px 10px;
+}
+.ended-exam-button:hover {
+    background-color: #555;
+    width: max-content;
+    place-self: center;
+    cursor: not-allowed;
+}
+
+.grades-exam-button {
+    background-color: #28a745;
+    width: max-content;
+    place-self: center;
+}
+
+.grades-exam-button:hover {
+    background-color: #1f9b3c;
+    width: max-content;
+    place-self: center;
+    transition: background-color 0.3s;
+    cursor: pointer;
 }

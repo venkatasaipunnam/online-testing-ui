@@ -24,8 +24,9 @@ const App = () => {
           position="top-right"
           autoClose={3000}
           hideProgressBar={false}
-          closeOnClick
           pauseOnHover
+          closeButton={false}
+          className="toast-container"
         />
       </AuthProvider>
     </Router>

@@ -8,7 +8,7 @@ import { useSelector } from 'react-redux';
 const UpdateExamComponent = (props) => {
 
     const [isFormEditMode, setIsFormEditMode] = useState(false);
-    const { exam, values, validateOptions, handleChange, handleCreateQuestion, handleUpdateQuestion, handleUpdateOption, handleDeleteQuestion, handleDeleteOption, handleUpdateExam, handleCreateOption } = props
+    const { exam, values, setFieldValue, validateOptions, handleChange, handleCreateQuestion, handleUpdateQuestion, handleUpdateOption, handleDeleteQuestion, handleDeleteOption, handleUpdateExam, handleCreateOption } = props
 
     const [isEditMode, setIsEditMode] = useState(false);
     const [isFieldChanged, setIsFieldChanged] = useState(false);
@@ -39,6 +39,7 @@ const UpdateExamComponent = (props) => {
                 savedExam.totalPoints !== updatedExam.totalPoints ||
                 savedExam.autoGrade !== updatedExam.autoGrade
             ) {
+                console.log("isupdated")
                 setIsFieldChanged(true);
             } else {
                 setIsFieldChanged(false);
@@ -58,23 +59,15 @@ const UpdateExamComponent = (props) => {
                 <div className='exam-action-container' >
                     <div className='column-fields exam-action-control'>
                         {!isEditMode &&
-                            <FontAwesomeIcon className="btn-add-option edit-question-button" title='Edit Question' icon={faEdit} onClick={() => {
+                            <FontAwesomeIcon className="btn-add-option edit-question-button" title='Edit Exam' icon={faEdit} onClick={() => {
                                 setIsEditMode(true);
                             }} />
                         }
-                        {/* {isFieldChanged[optionIndex] &&
-                                        <button type="button" className="btn-add-option add-option-button" title="Save Option" onClick={() => {
-                                            handleUpdateOption(question, option)
-                                            setIsEditMode({ ...isEditMode, [optionIndex]: !isEditMode[optionIndex] });
-                                        }}>
-                                            <FontAwesomeIcon icon={faSave} />
-                                        </button>
-                                    } */}
-                        {isEditMode && <FontAwesomeIcon icon={faSave} className="btn-add-option save-question-button" title="Save Question" onClick={() => {
-                            handleIsChanges({ updatedExam: exam })
+                        {isEditMode && <FontAwesomeIcon icon={faSave} className="btn-add-option save-question-button" title="Save Exam" onClick={() => {
+                            handleIsChanges({ updatedExam: values })
                             if (isFieldChanged) {
                                 if (exam?.examId) {
-                                    handleUpdateExam(exam);
+                                    handleUpdateExam(values);
                                     setIsFieldChanged(false);
                                 }
                             }
@@ -101,7 +94,7 @@ const UpdateExamComponent = (props) => {
                         data-automation-id="create-exam-title"
                         onChange={(e) => {
                             handleChange({ target: { name: `title`, value: e.target.value } })
-                            handleIsChanges({ updatedExam: exam })
+                            handleIsChanges({ updatedExam: values })
                         }
                         }
                     />
@@ -115,7 +108,7 @@ const UpdateExamComponent = (props) => {
                         data-automation-id="create-exam-description"
                         onChange={(e) => {
                             handleChange({ target: { name: `description`, value: e.target.value } })
-                            handleIsChanges({ updatedExam: exam })
+                            handleIsChanges({ updatedExam: values })
                         }
                         }
                     />
@@ -131,7 +124,7 @@ const UpdateExamComponent = (props) => {
                             disabled={!isEditMode}
                             onChange={(e) => {
                                 handleChange({ target: { name: `startTime`, value: e.target.value } })
-                                handleIsChanges({ updatedExam: exam })
+                                handleIsChanges({ updatedExam: values })
                             }
                             }
                         />
@@ -146,7 +139,7 @@ const UpdateExamComponent = (props) => {
                             disabled={!isEditMode}
                             onChange={(e) => {
                                 handleChange({ target: { name: `endTime`, value: e.target.value } })
-                                handleIsChanges({ updatedExam: exam })
+                                handleIsChanges({ updatedExam: values })
                             }
                             } />
                     </div>
@@ -159,7 +152,7 @@ const UpdateExamComponent = (props) => {
                             data-automation-id="create-exam-duration"
                             disabled={!isEditMode} onChange={(e) => {
                                 handleChange({ target: { name: `duration`, value: e.target.value } })
-                                handleIsChanges({ updatedExam: exam })
+                                handleIsChanges({ updatedExam: values })
                             }
                             } />
                     </div>
@@ -176,7 +169,7 @@ const UpdateExamComponent = (props) => {
                             disabled={!isEditMode}
                             onChange={(e) => {
                                 handleChange({ target: { name: `totalPoints`, value: e.target.value } })
-                                handleIsChanges({ updatedExam: exam })
+                                handleIsChanges({ updatedExam: values })
                             }
                             } />
                     </div>
@@ -193,7 +186,7 @@ const UpdateExamComponent = (props) => {
                                 disabled={!isEditMode}
                                 onChange={(e) => {
                                     handleChange({ target: { name: `autoGrade`, value: e.target.value } })
-                                    handleIsChanges({ updatedExam: exam })
+                                    handleIsChanges({ updatedExam: values })
                                 }
                                 }
                             />

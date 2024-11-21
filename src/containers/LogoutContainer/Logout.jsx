@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 import { doLogout } from "../../redux/reducers/UserReducers";
 import { doLogout as logout } from "../../redux/actions/PreLoginActions";
 import { useState } from "react";
+import { getSessionId } from "../../utils/Helper";
 
 export const Logout = () => {
 
@@ -16,18 +17,18 @@ export const Logout = () => {
     useEffect( () => {
         const performLogout = async () => {
             try {
-                await logout(userState?.user?.session?.sessionId);
+                await logout(getSessionId());
             } catch (error) {
                 console.error("Error during logout", error);
             }
-            setIsLogout(true);
             dispatch(doLogout());
+            setIsLogout(true);
             navigate('/login');
         };
         if(!isLogout) {
             performLogout();
         }
-    }, [isLogout, dispatch, navigate, userState?.user?.session?.sessionId]);
+    }, [isLogout, dispatch, navigate]);
 
     return (<></>);
 }

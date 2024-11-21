@@ -13,63 +13,92 @@ export const getExamDetails = async (data) => {
         params: {
             examId: data
         },
-        headers: default_headers,
+        headers: {
+            'Content-Type': 'application/json',
+            'sessionid': sessionStorage.getItem('sessionId'),
+        } ,
     })
     return response;
 }
 
 export const getCreatedExamDetails = async (data) => {
+    console.log(default_headers)
     const response = await axios.get(APP_BASE_URL + ExamApis.getAllCreatedExamsEndPoint, {
-        headers: default_headers,
+        headers: {
+            'Content-Type': 'application/json',
+            'sessionid': sessionStorage.getItem('sessionId'),
+        } ,
     })
     return response;
 }
 
 export const getAssignedExamDetails = async (data) => {
+    console.log(default_headers)
     const response = await axios.get(APP_BASE_URL + ExamApis.getAllAssignedExamsEndPoint, {
-        headers: default_headers,
+        headers: {
+            'Content-Type': 'application/json',
+            'sessionid': sessionStorage.getItem('sessionId'),
+        } ,
     })
     return response;
 }
 
 export const updateExamDetails = async (data) => {
     const response = await axios.put(APP_BASE_URL + ExamApis.updateExamEndPoint, data, {
-        headers: default_headers,
+        headers: {
+            'Content-Type': 'application/json',
+            'sessionid': sessionStorage.getItem('sessionId'),
+        } ,
     })
     return response;
 }
 
 export const updateQuestionDetails = async (data) => {
     const response = await axios.put(APP_BASE_URL + ExamApis.updateQuestionEndPoint, data, {
-        headers: default_headers,
+        headers: {
+            'Content-Type': 'application/json',
+            'sessionid': sessionStorage.getItem('sessionId'),
+        } ,
     })
     return response;
 }
 
 export const updateOptionDetails = async (data) => {
     const response = await axios.put(APP_BASE_URL + ExamApis.updateOptionEndPoint, data, {
-        headers: default_headers,
+        headers: {
+            'Content-Type': 'application/json',
+            'sessionid': sessionStorage.getItem('sessionId'),
+        } ,
     })
     return response;
 }
 
 export const createExam = async (data) => {
     const response = await axios.post(APP_BASE_URL + ExamApis.createExamEndPoint, data, {
-        headers: default_headers,
+        headers: {
+            'Content-Type': 'application/json',
+            'sessionid': sessionStorage.getItem('sessionId'),
+        } ,
     })
     return response;
 }
 
 export const createQuestion = async (data) => {
     const response = await axios.post(APP_BASE_URL + ExamApis.createQuestionEndPoint, data, {
-        headers: default_headers,
+        headers: {
+            'Content-Type': 'application/json',
+            'sessionid': sessionStorage.getItem('sessionId'),
+        } ,
     })
     return response;
 }
 
 export const createOption = async (data) => {
     const response = await axios.post(APP_BASE_URL + ExamApis.createOptionEndPoint, data, {
-        headers: default_headers,
+        headers: {
+            'Content-Type': 'application/json',
+            'sessionid': sessionStorage.getItem('sessionId'),
+        } ,
     })
     return response;
 }
@@ -79,7 +108,10 @@ export const deleteQuestion = async (data) => {
         params: {
             questionId: data
         },
-        headers: default_headers,
+        headers: {
+            'Content-Type': 'application/json',
+            'sessionid': sessionStorage.getItem('sessionId'),
+        } ,
     })
     return response;
 }
@@ -89,7 +121,78 @@ export const deleteOption = async (data) => {
         params: {
             optionId: data
         },
-        headers: default_headers,
+        headers: {
+            'Content-Type': 'application/json',
+            'sessionid': sessionStorage.getItem('sessionId'),
+        } ,
+    })
+    return response;
+}
+
+export const deleteExam = async (data) => {
+    const response = await axios.delete(APP_BASE_URL + ExamApis.deleteExamEndPoint, {
+        params: {
+            examId: data
+        },
+        headers: {
+            'Content-Type': 'application/json',
+            'sessionid': sessionStorage.getItem('sessionId'),
+        } ,
+    })
+    return response;
+}
+
+export const startExam = async (data) => {
+    const response = await axios.post(APP_BASE_URL + ExamApis.startExamEndPoint, parseInt(data), {        
+        headers: {
+            'Content-Type': 'application/json',
+            'sessionid': sessionStorage.getItem('sessionId'),
+        } ,
+    })
+    return response;
+}
+
+export const submitExam = async (data) => {
+    const response = await axios.post(APP_BASE_URL + ExamApis.endExamEndPoint, data, {
+        headers: {
+            'Content-Type': 'application/json',
+            'sessionid': sessionStorage.getItem('sessionId'),
+            'examsessionid': sessionStorage.getItem('examSessionId'),
+        } ,
+    })
+    return response;
+}
+
+export const saveUserExamResponse = async (data) => {
+    const response = await axios.post(APP_BASE_URL + ExamApis.saveUserExamResponse, data, {
+        headers: {
+            'Content-Type': 'application/json',
+            'sessionid': sessionStorage.getItem('sessionId'),
+            'examsessionid': sessionStorage.getItem('examSessionId'),
+        } ,
+    })
+    return response;
+}
+
+export const assignUserToExams = async (data) => {
+    const response = await axios.post(APP_BASE_URL + ExamApis.AssignExamToUsersEndPoint, data, {
+        headers: {
+            'Content-Type': 'application/json',
+            'sessionid': sessionStorage.getItem('sessionId'),
+        } ,
+    })
+    return response;
+}
+
+export const getUserExamResponses = async (data) => {
+    const response = await axios.get(APP_BASE_URL + ExamApis.getUserExamResponse, {
+        params: {
+            examId: data
+        },
+        headers: {
+            'Content-Type': 'application/json',
+            'sessionid': sessionStorage.getItem('sessionId'),
+        } ,
     })
     return response;
 }
