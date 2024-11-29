@@ -114,7 +114,7 @@
     cursor: not-allowed;
 }
 
-.finished-exam-button {
+.finished-exam-button, .graded-exam-button {
     background-color: #28a745;
     width: max-content;
     place-self: center;
@@ -150,7 +150,8 @@
     place-self: center;
 }
 
-.grades-exam-button:hover {
+.grades-exam-button:hover,
+.graded-exam-button:hover {
     background-color: #1f9b3c;
     width: max-content;
     place-self: center;

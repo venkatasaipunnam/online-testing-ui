@@ -196,3 +196,101 @@ export const getUserExamResponses = async (data) => {
     })
     return response;
 }
+
+export const getUserExamResponsesBySession = async (examId, examSession) => {
+    console.log(examId, examSession)
+    const response = await axios.get(APP_BASE_URL + ExamApis.getUserExamResponseByStudent, {
+        params: {
+            examId: examId,
+            examSession: examSession
+        },
+        headers: {
+            'Content-Type': 'application/json',
+            'sessionid': sessionStorage.getItem('sessionId'),
+        } ,
+    })
+    return response;
+}
+
+
+export const saveUserFeedback = async (data) => {
+    const response = await axios.post(APP_BASE_URL + ExamApis.SaveUserFeedbackEndPoint, data, {
+        headers: {
+            'Content-Type': 'application/json',
+            'sessionid': sessionStorage.getItem('sessionId'),
+        } ,
+    })
+    return response;
+}
+
+
+export const updateUserFeedback = async (data) => {
+    const response = await axios.put(APP_BASE_URL + ExamApis.UpdateUserFeedbackEndPoint, data, {
+        headers: {
+            'Content-Type': 'application/json',
+            'sessionid': sessionStorage.getItem('sessionId'),
+        } ,
+    })
+    return response;
+}
+
+export const PostStudentExamGrades = async (data) => {
+    const response = await axios.post(APP_BASE_URL + ExamApis.SaveStudentExamGrades, data, {
+        headers: {
+            'Content-Type': 'application/json',
+            'sessionid': sessionStorage.getItem('sessionId'),
+        } ,
+    })
+    return response;
+}
+
+export const PublishExamGrades = async (data) => {
+    const response = await axios.post(APP_BASE_URL + ExamApis.publishExamGrades, data, {
+        headers: {
+            'Content-Type': 'application/json',
+            'sessionid': sessionStorage.getItem('sessionId'),
+        } ,
+    })
+    return response;
+}
+
+export const getUserExamGrades = async (data) => {
+    const response = await axios.get(APP_BASE_URL + ExamApis.getExamGrades, {
+        params: {
+            examId: data
+        },
+        headers: {
+            'Content-Type': 'application/json',
+            'sessionid': sessionStorage.getItem('sessionId'),
+        } ,
+    })
+    return response;
+}
+
+
+export const getStudentGrades = async (data) => {
+    const response = await axios.get(APP_BASE_URL + ExamApis.getStudentGrades, {
+        params: {
+            examId: data
+        },
+        headers: {
+            'Content-Type': 'application/json',
+            'sessionid': sessionStorage.getItem('sessionId'),
+        } ,
+    })
+    return response;
+}
+
+
+export const getExamAnalysis = async (data) => {
+    const response = await axios.get(APP_BASE_URL + ExamApis.getExamAnalysis, {
+        params: {
+            examId: data
+        },
+        headers: {
+            'Content-Type': 'application/json',
+            'sessionid': sessionStorage.getItem('sessionId'),
+        } ,
+    })
+    return response;
+}

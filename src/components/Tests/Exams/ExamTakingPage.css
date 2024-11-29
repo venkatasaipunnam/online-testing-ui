@@ -52,6 +52,13 @@
     margin-left: 10px;
     margin-top: 0px;
     margin-right: 20px;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    background-color: #30a000;
+    color: white;
+    cursor: pointer;
+    transition: background-color 0.3s;
 }
 
 .question-index h3 {

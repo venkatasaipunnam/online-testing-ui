@@ -5,6 +5,8 @@ import { useNavigate } from 'react-router-dom';
 import { getCreatedExamDetails, getAssignedExamDetails } from '../../redux/actions/ExamActions';
 import { useDispatch } from'react-redux';
 import { saveExams } from '../../redux/reducers/ExamReducers';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faBriefcaseClock, faClipboardCheck, faClock, faClockFour, faClockRotateLeft, faStopwatch, faTrophy, faUserClock } from '@fortawesome/free-solid-svg-icons';
 
 const ExamContainer = (props) => {
 
@@ -74,11 +76,11 @@ const ExamContainer = (props) => {
                     <h3>{exam.title}</h3>
                     <p>{exam.description}</p>
                     <div className="exam-details">
-                        <p><strong>Total Points:</strong> {exam.totalPoints}</p>
-                        <p><strong>Duration:</strong> {exam.duration} minutes</p>
-                        <p><strong>Start Time:</strong> {new Date(exam.startTime).toLocaleString()}</p>
-                        <p><strong>End Time:</strong> {new Date(exam.endTime).toLocaleString()}</p>
-                        <p><strong>Status:</strong> {exam.status}</p>
+                        <p><FontAwesomeIcon icon={faTrophy} />  <strong>Total Points:</strong> {exam.totalPoints}</p>
+                        <p><FontAwesomeIcon icon={faStopwatch} /> <strong>Duration:</strong> {exam.duration} minutes</p>
+                        <p><FontAwesomeIcon icon={faClockFour} /> <strong>Start Time:</strong> {new Date(exam.startTime).toLocaleString()}</p>
+                        <p><FontAwesomeIcon icon={faClock} /> <strong>End Time:</strong> {new Date(exam.endTime).toLocaleString()}</p>
+                        <p><FontAwesomeIcon icon={faClipboardCheck} /> <strong>Status:</strong> {exam.status}</p>
                     </div>
                     <button 
                         className="view-button" 

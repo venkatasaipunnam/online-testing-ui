@@ -6,6 +6,8 @@ import { saveExam } from '../../../redux/reducers/ExamReducers';
 import { useDispatch } from 'react-redux';
 import { getExamDetails, deleteExam } from '../../../redux/actions/ExamActions';
 import { toast } from 'react-toastify';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faClipboardCheck, faClock, faClockFour, faInfoCircle, faStopwatch, faTrophy } from '@fortawesome/free-solid-svg-icons';
 
 
 const ExamDetails = (props) => {
@@ -94,12 +96,12 @@ const ExamDetails = (props) => {
         <div className="exam-details-container exam-details-list">
             <div className="exam-card">
                 <h2>{exam.title}</h2>
-                <p><strong>Description:</strong> {exam.description}</p>
-                <p><strong>Total Points:</strong> {exam.totalPoints}</p>
-                <p><strong>Duration:</strong> {exam.duration} minutes</p>
-                <p><strong>Start Time:</strong> {new Date(exam.startTime).toLocaleString()}</p>
-                <p><strong>End Time:</strong> {new Date(exam.endTime).toLocaleString()}</p>
-                <p><strong>Status:</strong> {exam.status}</p>
+                <p><FontAwesomeIcon icon={faInfoCircle} /> <strong>Description:</strong> {exam.description}</p>
+                <p><FontAwesomeIcon icon={faTrophy} /> <strong>Total Points:</strong> {exam.totalPoints}</p>
+                <p><FontAwesomeIcon icon={faStopwatch} /> <strong>Duration:</strong> {exam.duration} minutes</p>
+                <p><FontAwesomeIcon icon={faClockFour} /> <strong>Start Time:</strong> {new Date(exam.startTime).toLocaleString()}</p>
+                <p><FontAwesomeIcon icon={faClock} /> <strong>End Time:</strong> {new Date(exam.endTime).toLocaleString()}</p>
+                <p><FontAwesomeIcon icon={faClipboardCheck} /> <strong>Status:</strong> {exam.status}</p>
                 {/* {role === "INSTRUCTOR" && (
                     <div className='exam-card-actions'>
                         <FontAwesomeIcon className="btn-add-option edit-exam-button" title='Edit Exam' icon={faEdit} onClick={() => handleExam()} />
@@ -107,19 +109,23 @@ const ExamDetails = (props) => {
                     </div>
                 )} */}
                 <div className='exam-column-fields'>
-                    {role === "INSTRUCTOR" &&  exam.status != "COMPLETED" &&
+                    {role === "INSTRUCTOR" &&  !["COMPLETED", "GRADED", "GRADES INPROGRESS"].includes(exam.status) &&
                     <button className="start-exam-button" disabled={exam.status === "COMPLETED"} onClick={() => handleExam()}>Update Exam</button>}
-                    {role === "INSTRUCTOR" && exam.status === "COMPLETED" &&
-                    <button className="start-exam-button" onClick={() => handleGrades()}>Grade</button>}
-                    {role === "INSTRUCTOR" && exam.status != "COMPLETED" &&
-                    <button className="assign-exam-button" disabled={exam.status === "COMPLETED"} onClick={() => handleAssign()}>Assign Exam</button>}
-                    {role === "INSTRUCTOR" && exam.status != "COMPLETED" &&
+                    {role === "INSTRUCTOR" && ["COMPLETED", "GRADED", "GRADES INPROGRESS"].includes(exam.status) &&
+                    <button className="start-exam-button" onClick={() => handleGrades()}>{exam.status === "COMPLETED" ? 'Start Grades' : exam.status === 'GRADED' ? 'Graded' : 'Grades Inprogress'} </button>}
+                    {role === "INSTRUCTOR" && !["COMPLETED", "GRADED", "GRADES INPROGRESS"].includes(exam.status) &&
+                    <button className="assign-exam-button" disabled={["COMPLETED", "GRADED", "GRADES INPROGRESS"].includes(exam.status)} onClick={() => handleAssign()}>Assign Exam</button>}
+                    {role === "INSTRUCTOR" && !["COMPLETED", "GRADED", "GRADES INPROGRESS"].includes(exam.status) &&
                     <button className="delete-exam-button" disabled={exam.status === "COMPLETED"} onClick={() => handleDelete()}>Delete Exam</button>}
-                    {role === "STUDENT" && exam.status != "COMPLETED" && exam.examIndicator != 'Completed' && <button className="start-exam-button" onClick={() => handleExam()}>Start Exam</button>}
-                    {role === "STUDENT" && exam.status != "COMPLETED" && exam.examIndicator === 'Completed' && <button className="finished-exam-button" disabled={true} onClick={() => {console.log("implment handle results")}}>Exam Finished</button>}
-                    {role === "STUDENT" && exam.status === "COMPLETED" && exam.examIndicator != 'Completed' && <button className="ended-exam-button" disabled={true} onClick={() => {console.log("implment handle results")}}>Exam Ended</button>}
-                    {role === "STUDENT" && exam.status === "COMPLETED" && exam.examIndicator === 'Completed' && <button className="notgraded-exam-button" disabled={true} onClick={() => {console.log("implment handle results")}}>Not Yet Graded</button>}        
-                    
+                    {role === "STUDENT" && !["COMPLETED", "GRADED", "GRADES INPROGRESS"].includes(exam.status) && exam.examIndicator != 'Completed' && <button className="start-exam-button" onClick={() => handleExam()}>Start Exam</button>}
+                    {role === "STUDENT" && !["COMPLETED", "GRADED", "GRADES INPROGRESS"].includes(exam.status) && exam.examIndicator === 'Completed' && <button className="finished-exam-button" disabled={true} onClick={() => {console.log("implment handle results")}}>Exam Finished</button>}
+                    {role === "STUDENT" && ["COMPLETED", "GRADED", "GRADES INPROGRESS"].includes(exam.status) && exam.examIndicator != 'Completed' && <button className="ended-exam-button" disabled={true} onClick={() => {console.log("implment handle results")}}>Exam Ended</button>}
+                    {role === "STUDENT" && (["COMPLETED", "GRADED", "GRADES INPROGRESS"].includes(exam.status) && 
+                        exam.status === "COMPLETED" ? <button className="notgraded-exam-button" disabled={true} onClick={() => {console.log("implment handle results")}}>Not Yet Graded</button>
+                        : exam.status === "GRADED" ? <button className="graded-exam-button" onClick={() => {navigate(`/results/${exam.examId}`)}}>View Grades</button>
+                        : exam.status === "GRADES INPROGRESS" && <button className="grading-exam-button" disabled={true} onClick={() => {console.log("implment handle results")}}>Grades In Progress</button>
+                        )
+                    }
                 </div>
             </div>
         </div>

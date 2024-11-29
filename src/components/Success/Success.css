@@ -12,6 +12,7 @@
 .celebration-icon {
     font-size: 40px; /* Size of the celebration icon */
     margin-bottom: 10px; /* Space below the icon */
+    place-self: center;
 }
 
 .login-link {

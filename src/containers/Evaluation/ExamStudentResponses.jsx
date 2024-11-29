@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import './EvaluationPage.css';
 import { useDispatch } from 'react-redux';
-import { getUserExamResponses } from '../../redux/actions/ExamActions';
+import { getUserExamResponses, PublishExamGrades } from '../../redux/actions/ExamActions';
 import { saveUserExamResponses } from '../../redux/reducers/ExamReducers';
 import { useNavigate, useParams } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faAward, faCircle } from '@fortawesome/free-solid-svg-icons';
+import { faAward, faCircle, faGraduationCap, faWarning } from '@fortawesome/free-solid-svg-icons';
+import { toast } from 'react-toastify';
 
 
 const ExamStudentResponses = (props) => {
@@ -44,11 +45,24 @@ const ExamStudentResponses = (props) => {
 
     const navigate = useNavigate()
 
-    const handleStartGrading = (userId) => {
+    const handleStartGrading = (examSession) => {
         // Navigate to the exam details page
-        navigate(`/exam/${examId}/grade/${userId}`);
+        navigate(`/exam/${examId}/grade/${examSession}`);
         // Here you could use a router to navigate, e.g., using React Router
     };
+
+    const handlePublishResults = async () => {
+        try {
+            const response = await PublishExamGrades(examId);
+            console.log("Exams fetched successfully + ", response);
+            if (response.data) {
+                toast.success("Exam Results Published successfully")
+                navigate(`/exam/${examId}`);
+            }
+        } catch (error) {
+            console.error("Error : ", error);
+        }
+    }
 
     return isLoading ? (<>Loading ...</>) : (
         <div className="upcoming-exams-container">
@@ -65,7 +79,7 @@ const ExamStudentResponses = (props) => {
                                 <th></th>
                                 <th className='align-left'>Name</th>
                                 <th className='align-left'>Email</th>
-                                <th className='align-left'>User Type</th>
+                                <th className='align-left'>Grades</th>
                                 <th></th>
                             </tr>
                         </thead>
@@ -74,23 +88,37 @@ const ExamStudentResponses = (props) => {
 
                                 <tr key={student.userId}>
                                     <td className='exam-list-indicater'>
-                                        <FontAwesomeIcon className='exam-list-indicator-info' icon={faCircle} />
-                                        
+                                        {student?.isGraded ?
+                                            <FontAwesomeIcon className='exam-list-indicator-info' icon={faCircle} title='Already Completed' />
+                                            :
+                                            <FontAwesomeIcon className='exam-list-indicator-warning' icon={faWarning} title='Not Graded' />
+
+                                        }            
+                                        {/* <FontAwesomeIcon className='exam-list-indicator-info' icon={faCircle} /> */}
+
                                     </td>
                                     <td className="exam-list-examTitle">{student.firstName} {student.lastName}</td>
                                     <td className="exam-list-examDate">{student.emailId}</td>
-                                    <td className="exam-list-examTiming">{student.userType}</td>
+                                    <td className="exam-list-examTiming">{student.isGraded ? 'Done' : 'Pending'}</td>
                                     <td className="exam-list-actions">
-                                        <button className='exam-list-action-grade-btn' onClick={() => { handleStartGrading(student.userId) }} >
-                                            <FontAwesomeIcon className='exam-list-action-grade' icon={faAward} /> Grade
+                                        <button className='exam-list-action-grade-btn' onClick={() => { handleStartGrading(student.examRespondentSession) }} >
+                                            <FontAwesomeIcon className='exam-list-action-grade' icon={faAward} /> {student.isGraded ? 'Graded' : 'Grade'}
                                         </button>
 
                                     </td>
                                 </tr>
                             ))}
+
                         </tbody>
+
                     </table>
                 )}
+                <div>
+                    <button className='exam-student-response-publish' onClick={() => handlePublishResults()}
+                        disabled={examData?.isResultsPublished}>
+                        <FontAwesomeIcon className='exam-student-response-publish-icon' icon={faGraduationCap} /> {examData?.isResultsPublished ? 'Results Published' : 'Publish Results'}
+                    </button>
+                </div>
             </div>
         </div>
     );

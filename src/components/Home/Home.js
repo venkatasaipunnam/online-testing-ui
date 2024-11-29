@@ -16,6 +16,9 @@ import ExamGradingPage from '../../containers/Evaluation/ExamGradingPage';
 import EvaluationPage from '../../containers/Evaluation/EvaluationPage';
 import ListGradesPage from '../../containers/Grade/ListGradesPage';
 import ExamStudentResponses from '../../containers/Evaluation/ExamStudentResponses';
+import ViewExamGrades from '../../containers/Grade/ViewExamGrades';
+import ViewExamGrade from '../../containers/Grade/ViewExamGrade';
+import ResultsComponent from '../Results/ResultsComponent';
 
 const Home = (props) => {
 
@@ -35,6 +38,9 @@ const Home = (props) => {
             path=== '/start-test' ? <ExamPage /> : 
             path=== '/assign-exam' ? <AssignStudentPage /> :
             path=== '/feedback' ? <ExamStudentResponses /> :
+            path=== '/review-grades' ? <ViewExamGrades /> :
+            path=== '/view-results' ? <ViewExamGrade /> :
+            path=== '/results' ? <ResultsComponent role={user?.userType} /> :
             path=== '/evaluate-tests' ? <EvaluationPage /> :
             path=== '/profile' ? <ProfilePage /> :
             path=== '/grades' ? <ListGradesPage /> :

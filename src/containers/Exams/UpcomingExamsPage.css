@@ -107,11 +107,14 @@
 .table th {
   color: black;
   text-align: center;
+  min-width: 80px;
 }
 
 .table td {
   color: #807873;
   text-align: left;
+  align-self: center;
+  min-width: 80px;
 }
 
 .table tr:hover {

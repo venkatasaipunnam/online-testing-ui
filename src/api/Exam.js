@@ -15,6 +15,13 @@ export const ExamApis={
     startExamEndPoint:'/exam/start',
     endExamEndPoint:'/exam/end',
     saveUserExamResponse: '/exam/response/save',
-    getUserExamResponse: '/exam/response/get'
-
+    getUserExamResponse: '/exam/response/get',
+    getUserExamResponseByStudent: '/exam/response/student/get',
+    SaveUserFeedbackEndPoint: '/exam/response/feedback/create',
+    UpdateUserFeedbackEndPoint: '/exam/response/feedback/update',
+    SaveStudentExamGrades: '/exam/response/student/grades/save',
+    publishExamGrades: '/exam/response/result/publish',
+    getExamGrades: '/exam/grade',
+    getStudentGrades: '/exam/grade/student',
+    getExamAnalysis: '/exam/analysis'
 }

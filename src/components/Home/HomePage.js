@@ -104,7 +104,7 @@ const HomePage = () => {
                             variant="contained" 
                             color="primary" 
                             component={Link} 
-                            to="/results"
+                            to={isInstructor ? "/grades" : "/results"}
                             sx={{ marginTop: 2 }}
                         >
                             {isInstructor ? "View Student Results" : "See Your Results"}

@@ -55,7 +55,12 @@ export const PrivateRouter = () => {
             <Route path="/exam/:examId/feedback" exact element={<Home path='/feedback'  />} />
             <Route path="/evaluate-tests" exact element={<Home path='/evaluate-tests' />} />
             <Route path="/grades" exact element={<Home path='/grades' />} />
-            <Route path="/exam/:examId/grade/:userId" exact element={<Home path='/grade' />} />
+            <Route path="/exam/:examId/grade/:examSession" exact element={<Home path='/grade' />} />
+            
+            <Route path="/exam/:examId/grades" exact element={<Home path='/review-grades' />} />
+            
+            <Route path="/results/:examId" exact element={<Home path='/view-results' />} />
+            <Route path="/results" exact element={<Home path='/results' />} />
             
             <Route path="/dashboard" exact element={<Dashboard />} />
             <Route path="/profile" exact element={<Home path='/profile' />} />

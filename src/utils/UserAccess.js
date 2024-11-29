@@ -57,12 +57,12 @@ export const NavMiddleMenu = {
             path: '/grades',
             icon: faGraduationCap,
             label: 'Grades'
-        },
-        {
-            path: '/analysis',
-            icon: faChartLine,
-            label: 'Profile'
         }
+        // {
+        //     path: '/analysis',
+        //     icon: faChartLine,
+        //     label: 'Profile'
+        // }
     ],
     STUDENT: [
         {

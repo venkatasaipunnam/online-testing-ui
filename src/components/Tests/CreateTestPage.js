@@ -347,7 +347,7 @@ const CreateTestPage = () => {
             </div >
 
             <button type="submit" className="btn-save create-exam-button">
-              <FontAwesomeIcon icon={faSave} />  Save Exam
+              <FontAwesomeIcon icon={faSave} /> {` Save Exam`}
             </button>
 
           </Form >
