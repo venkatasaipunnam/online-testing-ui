@@ -23,5 +23,6 @@ export const ExamApis={
     publishExamGrades: '/exam/response/result/publish',
     getExamGrades: '/exam/grade',
     getStudentGrades: '/exam/grade/student',
-    getExamAnalysis: '/exam/analysis'
+    getExamAnalysis: '/exam/analysis',
+    getExamMetaData: '/exam/metadata'
 }

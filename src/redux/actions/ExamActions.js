@@ -294,3 +294,13 @@ export const getExamAnalysis = async (data) => {
     })
     return response;
 }
+
+export const getUserExamMetaData = async () => {
+    const response = await axios.get(APP_BASE_URL + ExamApis.getExamMetaData, {
+        headers: {
+            'Content-Type': 'application/json',
+            'sessionid': sessionStorage.getItem('sessionId'),
+        } ,
+    })
+    return response;
+}

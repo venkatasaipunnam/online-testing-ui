@@ -19,6 +19,7 @@ import ExamStudentResponses from '../../containers/Evaluation/ExamStudentRespons
 import ViewExamGrades from '../../containers/Grade/ViewExamGrades';
 import ViewExamGrade from '../../containers/Grade/ViewExamGrade';
 import ResultsComponent from '../Results/ResultsComponent';
+import ChangePassword from '../../containers/ChangePassword/ChangePassword';
 
 const Home = (props) => {
 
@@ -45,10 +46,10 @@ const Home = (props) => {
             path=== '/profile' ? <ProfilePage /> :
             path=== '/grades' ? <ListGradesPage /> :
             path=== '/grade' ? <ExamGradingPage /> :
+            path=== '/change-password' ? <ChangePassword /> :
             <HomePage user = {user} />}
             {path === '/home' && <UpcomingExamsPage role = {user?.userType}/>}
         </div>
-
     );
 };
 

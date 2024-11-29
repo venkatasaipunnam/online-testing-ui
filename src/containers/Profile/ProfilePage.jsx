@@ -1,15 +1,42 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import './ProfilePage.css';
 import { useSelector } from 'react-redux';
 import { Avatar } from '@agney/react-avatar';
+import { getUserExamMetaData } from '../../redux/actions/ExamActions';
+import { LoadingPage } from '../../components/Loading/Loading';
 
 const ProfilePage = (props) => {
 
     const { path } = props;
 
+    const [isLoading, setIsLoading] = useState(true);
+    const [examsMetaData, setExamsMetaData] = useState(undefined);
     const userState = useSelector((state) => state.user.value)
 
     const user = userState?.user;
+
+    useEffect(() => {
+
+        const fetchUsersExamMetaData = async () => {
+            try {
+                const response = await getUserExamMetaData();
+                setExamsMetaData(response?.data);
+            } catch (error) {
+                console.error("Error fetching exam meta data", error);
+            }
+        };
+
+        if (isLoading && examsMetaData === undefined) {
+            fetchUsersExamMetaData();
+        } else if (examsMetaData != undefined) {
+            setIsLoading(false);
+        }
+    }, [isLoading, examsMetaData]);
+
+
+    if (isLoading) {
+        return <LoadingPage />;
+    }
 
     return (
         <div className="user-profile-container">
@@ -70,11 +97,11 @@ const ProfilePage = (props) => {
                 <div className="profile-details">
                     <div className="detail-row">
                         <div className="detail-label">Exams Assigned:</div>
-                        <div className="detail-value">{user.examsAssigned}</div>
+                        <div className="detail-value">{examsMetaData?.examsAssigned}</div>
                     </div>
                     <div className="detail-row">
                         <div className="detail-label">Exams Attempted:</div>
-                        <div className="detail-value">{user.examsAttempted}</div>
+                        <div className="detail-value">{examsMetaData?.examsAttempted}</div>
                     </div>
                 </div>
             </div>
