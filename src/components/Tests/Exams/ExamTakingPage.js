@@ -9,12 +9,31 @@ const ExamTakingPage = (props) => {
     const { examSession, exam, saveUserResponse, finishExam } = props;
     const [timeLeft, setTimeLeft] = useState(parseInt((new Date(examSession?.endTime) - Date.now()) / (1000)))
     const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
-    const [userResponses, setUserResponses] = useState(examSession?.userResponses.reduce((acc, response) => {
-        acc[response.questionId] = [response.optionId] || response.answerResponse;
+    const questions = exam?.questions?.reduce((acc, question) => {
+        acc[question?.questionId] = question
         return acc;
-      }, {}));
+    }, {});
 
-    console.log(userResponses)
+      const [userResponses, setUserResponses] = useState(() => {
+        return examSession?.userResponses.reduce((acc, response) => {
+          const questionId = response.questionId;
+          const questionType = questions[questionId]?.questionType;
+      
+          if (!acc[questionId]) {
+            acc[questionId] = ['MCQ', 'MSQ', 'TF'].includes(questionType) ? [] : "";
+          }
+      
+          if (['MCQ', 'MSQ', 'TF'].includes(questionType)) {
+            // Append the optionId for MCQ, MSQ, TF types
+            acc[questionId].push(response?.optionId);
+          } else {
+            // Set the answerResponse for other types
+            acc[questionId] = response.answerResponse;
+          }
+      
+          return acc;
+        }, {});
+      });
 
     useEffect(() => {
         const timerInterval = setInterval(() => {
@@ -24,12 +43,15 @@ const ExamTakingPage = (props) => {
                     toast.warning('Time is up! Your responses are being submitted.');
                     return prevTime - 1;
                 }
-                if(prevTime <= 1) {
+                if(prevTime == 5) {
                     toast.warning('Time is almost up! Auto submitting your responses.');
-                    handleSubmit();
-                    return 0;
+                    return prevTime - 1;
                 }
-                return prevTime - 1;
+                if(prevTime <= 1) {
+                    handleSubmit();
+                    return prevTime - 1;
+                }
+                return prevTime-1;
             });
         }, 1000);
 

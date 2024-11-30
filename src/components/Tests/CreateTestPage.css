@@ -1,3 +1,9 @@
+input[type="number"]::-webkit-inner-spin-button,
+  input[type="number"]::-webkit-outer-spin-button {
+      -webkit-appearance: none;
+      margin: 0;
+  }
+
 .exam-create-container {
     min-width: 800px;
     margin: 0 auto;
@@ -142,6 +148,17 @@
     background-color: #28a745; /* Green for add option */
     color: #fff;
     border: none;
+  }
+  
+  .btn-add-option:disabled {
+    background-color: #98ae9d; /* Green for add option */
+    color: #fff;
+    border: none;
+  }
+
+  .btn-add-option:disabled:hover {
+    background-color: #98ae9d;
+    cursor: not-allowed;
   }
   
   .btn-add-option:hover {

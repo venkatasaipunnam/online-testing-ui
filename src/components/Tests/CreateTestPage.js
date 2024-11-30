@@ -51,7 +51,7 @@ const CreateTestPage = () => {
     // Logic for creating the exam can be added here
   };
 
-  const handleSubmit = async (values, { setSubmitting, resetForm }) => {
+  const handleSubmit = async (values, { resetForm }) => {
     setSubmitting(true);
     try {
       const response = await createExam(values);
@@ -101,7 +101,7 @@ const CreateTestPage = () => {
       <Formik
         initialValues={initialValues}
         validationSchema={validationSchema}
-        validate={() => console.log(ErrorMessage)}
+        validate={(values) => console.log(values)}
         onSubmit={handleSubmit}
         enableReinitialize
       >
@@ -168,9 +168,6 @@ const CreateTestPage = () => {
                 </div>
 
               </div>
-              {/* <button type="submit" className="btn btn-primary create-exam" onClick={() => handleCreateExam(values)}>
-                <FontAwesomeIcon icon={faSave} /> Save Exam
-              </button> */}
             </div>
 
             {/* Questions Section */}
@@ -222,67 +219,6 @@ const CreateTestPage = () => {
                           </div>
 
                         </div>
-                        {question.questionType === 'TF' && (
-                          <div className="options-container">
-                            <h4>Options</h4>
-                            <FieldArray name={`questions.${index}.options`}>
-                              {({ push: pushOption, remove: removeOption }) => {
-
-                                return (
-                                  <>
-
-                                    {question.options?.map((option, optionIndex) => (
-                                      <div className="option-item" key={option?.optionText}>
-                                        <Field
-                                          type="text"
-                                          id={`questions.${index}.options.${optionIndex}.optionText`}
-                                          name={`questions.${index}.options.${optionIndex}.optionText`}
-                                          placeholder={`Option ${optionIndex + 1}`}
-                                        />
-                                        <div className="form-row is-correct-switch-toggle form-group">
-                                          <span className="switch-label">Correct</span>
-                                          <label className="custom-switch" data-automation-id="toggle-iscorrect">
-                                            <Field
-                                              type="checkbox"
-                                              name={`questions.${index}.options.${optionIndex}.isCorrect`}
-                                              checked={!!option.isCorrect}
-                                              onChange={(e) => {
-                                                const isValidated = validateOptions(
-                                                  question,
-                                                  option,
-                                                  "isCorrect",
-                                                  e.target.checked
-                                                );
-                                                if (isValidated) {
-                                                  handleChange({
-                                                    target: {
-                                                      name: `questions.${index}.options.${optionIndex}.isCorrect`,
-                                                      value: e.target.checked,
-                                                    },
-                                                  });
-                                                }
-                                              }}
-                                              data-automation-id={`option_${option.optionText.toLowerCase()}-toggle-input`}
-                                            />
-                                            <span className="custom-slider"></span>
-                                          </label>
-                                        </div>
-                                        <button type="button" className="btn-remove-option remove-option-button" onClick={() => removeOption(optionIndex)}>
-                                          <FontAwesomeIcon icon={faTimes} />
-                                        </button>
-                                      </div>
-                                    ))}
-                                    {question.options.length < 2
-                                      &&
-                                      (
-                                        <button type="button" className="btn-add-option add-option-button" onClick={() => pushOption({ optionText: '', isCorrect: false })}> Add Option </button>
-                                      )}
-                                  </>
-                                );
-                              }}
-                            </FieldArray>
-                          </div>
-                        )}
 
                         {/* Disable options for other types */}
                         {['ESSAY', 'BLANK', 'SHORT'].includes(question.questionType) && (
@@ -293,7 +229,7 @@ const CreateTestPage = () => {
 
 
                         {/* Options Section */}
-                        {['MCQ', 'MSQ'].includes(question.questionType) && (<div className="options-container">
+                        {['MCQ', 'MSQ', 'TF'].includes(question.questionType) && (<div className="options-container">
                           <h4>Options</h4>
                           <FieldArray name={`questions.${index}.options`}>
                             {({ push: pushOption, remove: removeOption }) => (
@@ -327,7 +263,8 @@ const CreateTestPage = () => {
                                         <span className="custom-slider"></span>
                                       </label>
                                     </div>
-                                    <button type="button" className="btn-add-option add-option-button" onClick={() => pushOption({ optionText: '', isCorrect: false })}>
+                                    <button type="button" className="btn-add-option add-option-button" onClick={() => pushOption({ optionText: '', isCorrect: false })}
+                                      disabled={ question.questionType === 'TF' && question?.options.length >=2}>
                                       <FontAwesomeIcon icon={faPlus} />
                                     </button>
                                     <button type="button" className="btn-remove-option remove-option-button" onClick={() => removeOption(optionIndex)}>
@@ -344,7 +281,7 @@ const CreateTestPage = () => {
                         )}
                         <div className='form-group add-questions-column-fields'>
                           <button type="button" className="btn-add-question add-question-button"
-                            onClick={() => push({ questionTitle: '', questionDetails: '', questionType: 'MCQ', points: 0, options: [] })}>
+                            onClick={() => push({ questionTitle: '', questionDetails: '', questionType: 'MCQ', points: 0, options: [{ optionText: '', isCorrect: false }] })}>
                             Add Question
                           </button>
                         </div>
