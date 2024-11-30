@@ -20,11 +20,11 @@ const QuestionsComponent = (props) => {
     const handleIsChanges = ({ question, questionIndex, isReset }) => {
         let isChanged = false;
         if (isReset) {
-            handleChange({ target: { name: `questions.${questionIndex}.questionTitle`, value: questions[questionIndex].questionTitle } })
-            handleChange({ target: { name: `questions.${questionIndex}.questionDetails`, value: questions[questionIndex].questionDetails } })
-            handleChange({ target: { name: `questions.${questionIndex}.questionType`, value: questions[questionIndex].questionType } })
-            handleChange({ target: { name: `questions.${questionIndex}.points`, value: questions[questionIndex].points } })
-            handleChange({ target: { name: `questions.${questionIndex}.options`, value: questions[questionIndex].options } })
+            handleChange({ target: { name: `questions.${questionIndex}.questionTitle`, value: questions[questionIndex]?.questionTitle } })
+            handleChange({ target: { name: `questions.${questionIndex}.questionDetails`, value: questions[questionIndex]?.questionDetails } })
+            handleChange({ target: { name: `questions.${questionIndex}.questionType`, value: questions[questionIndex]?.questionType } })
+            handleChange({ target: { name: `questions.${questionIndex}.points`, value: questions[questionIndex]?.points } })
+            handleChange({ target: { name: `questions.${questionIndex}.options`, value: questions[questionIndex]?.options } })
             setIsFieldChanged({});
         } else {
             if (questions[questionIndex]?.questionTitle !== question?.questionTitle ||
@@ -82,8 +82,8 @@ const QuestionsComponent = (props) => {
                                             }} />
                                         }
                                         <FontAwesomeIcon icon={faTrashAlt} className="btn-remove-option remove-question-button" title='Delete Question' onClick={() => {
-                                            if (question.questionId) {
-                                                handleDeleteQuestion(question.questionId);
+                                            if (question?.questionId) {
+                                                handleDeleteQuestion(question?.questionId);
                                             }
                                             remove(index);
                                         }} />

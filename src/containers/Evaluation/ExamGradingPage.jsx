@@ -9,7 +9,6 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCheck, faCross, faTimes } from "@fortawesome/free-solid-svg-icons";
 import { faSave } from "@fortawesome/free-regular-svg-icons";
 import { toast } from "react-toastify";
-import { Field } from "formik";
 
 
 const ExamGradingPage = (props) => {
@@ -111,20 +110,7 @@ const ExamGradingPage = (props) => {
         }
     }, [isLoading, userResponses, examsData, examSession, examId, feedback]);
 
-    // const handlePointsUpdate = (questionId, newPoints) => {
-    //     setExamsData(prevData => {
-    //         const updatedQuestions = prevData.questions.map(question => {
-    //             if (question.questionId === questionId) {
-    //                 return { ...question, points: newPoints }; // Update points
-    //             }
-    //             return question;
-    //         });
-    //         return { ...prevData, questions: updatedQuestions };
-    //     });
-    // };
-
     const handleSaveFeedback = async (data) => {
-        // setSubmitting(true);
         try {
             const response = await saveUserFeedback(data);
             console.log('Assigning users to exam:', response);
@@ -133,13 +119,9 @@ const ExamGradingPage = (props) => {
             console.error('Error:', error);
             toast.error(error?.response?.data?.message);
         }
-        // finally {
-        //     setSubmitting(false);
-        // }
     };
 
     const handleUpdateFeedback = async (data) => {
-        // setSubmitting(true);
         try {
             const response = await updateUserFeedback(data);
             console.log('Feedback updated:', response);
@@ -148,9 +130,6 @@ const ExamGradingPage = (props) => {
             console.error('Error assigning users:', error);
             toast.error(error?.response?.data?.message);
         }
-        // finally {
-        //     setSubmitting(false);
-        // }
     };
 
     const saveQuestionFeedback = (question, feedback) => {
@@ -173,8 +152,8 @@ const ExamGradingPage = (props) => {
         setFeedback((prevFeedback) => ({
             ...prevFeedback,
             [question.questionId]: {
-                ...prevFeedback[question.questionId], // Preserve existing feedback for the question
-                [field]: value, // Update the specific field (e.g., pointsGained)
+                ...prevFeedback[question.questionId],
+                [field]: value,
             },
         }));
         if (examsData.isResultsPublished === true) {
@@ -201,7 +180,6 @@ const ExamGradingPage = (props) => {
 
 
     const handleUserGrades = async () => {
-        // setSubmitting(true);
         try {
             const response = await PostStudentExamGrades(examSession);
             console.log('Feedback updated:', response);
@@ -213,9 +191,6 @@ const ExamGradingPage = (props) => {
             console.error('Error Saving Student Grades :', error);
             toast.error(error?.response?.data?.message);
         }
-        // finally {
-        //     setSubmitting(false);
-        // }
     };
 
     const handlePostGrades = () => {
@@ -240,8 +215,8 @@ const ExamGradingPage = (props) => {
                     const response = feedback[question.questionId];
                     const isMSQ = question.questionType === 'MSQ';
                     const selectedOptions = isMSQ
-                        ? response?.choosenOptions || []  // Extract choosenOption for all responses
-                        : [response?.choosenOption]; // Take the first choosenOption for non-MSQ
+                        ? response?.choosenOptions || []
+                        : [response?.choosenOption];
 
                     return (
                         <div key={question.questionId} className="exam-grading-question-card">
@@ -308,11 +283,6 @@ const ExamGradingPage = (props) => {
                                             onBlur={(e) => handleFeedbackBlur(question)}
                                         />
                                     </div>
-
-                                    {/* <div className="form-row is-correct-switch-toggle form-group">
-                                        <FontAwesomeIcon icon={faCheck} />
-                                        <FontAwesomeIcon icon={faTimes} />
-                                    </div> */}
                                     <button className="exam-grading-question-feedback-save"
                                         onClick={() => saveQuestionFeedback(question, response)}
                                         disabled={isFeedbackChanges[question.questionId] == false || isFeedbackChanges[question.questionId] == undefined}

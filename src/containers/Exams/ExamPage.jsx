@@ -68,14 +68,13 @@ const ExamPage = (props) => {
             try {
                 const response = await saveUserExamResponse(data);
                 if (response.status === 200) {
-                    console.log("Exam deleted successfully");
                     console.log(response.data);
+                    toast.success("Response saved successfully");
                 } else {
-                    console.error("Error during exam deletion");
-                    toast.error("Error during exam deletion");
+                    console.error("Error during exam taking");
                 }
             } catch (error) {
-                console.error("Error during logout", error);
+                console.error("Error during Exam", error);
             }
         };
         performSave(data);

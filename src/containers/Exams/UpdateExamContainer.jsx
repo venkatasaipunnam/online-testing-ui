@@ -175,7 +175,11 @@ const UpdateExamContainer = () => {
     };
 
     const handleCreateOption = (questionId, values) => {
-        values['questionId'] = questionId;
+        if (questionId) {
+            values['questionId'] = questionId;
+        } else {
+            return;
+        }
         values['optionType'] = "CHOOSE"
         // Logic for creating the exam can be added here
         const createQuestionOption = async () => {

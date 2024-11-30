@@ -46,7 +46,7 @@ const OptionsComponent = (props) => {
     }
     return (
         < div className="options-container" >
-            {question.questionType === 'TF' && (
+            {question?.questionType === 'TF' && (
                 <div className="options-container">
                     <h4>Options</h4>
                     <FieldArray name={`questions.${index}.options`}>
@@ -82,10 +82,10 @@ const OptionsComponent = (props) => {
                                     />
                                     <Field type="checkbox" name={`questions.${index}.options.0.isCorrect`} disabled={!isEditMode[0]}
                                         onChange={(e) => {
-                                            const isValidated = validateOptions(question, question.options[0], 'isCorrect', !question.options[0].isCorrect);
+                                            const isValidated = validateOptions(question, question?.options[0], 'isCorrect', !question?.options[0]?.isCorrect);
                                             if (isValidated) {
-                                                handleIsChanges({ optionIndex: 0, field: 'isCorrect', value: !question.options[0].isCorrect })
-                                                handleChange({ target: { name: `questions.${index}.options.${0}.isCorrect`, value: !question.options[0].isCorrect } })
+                                                handleIsChanges({ optionIndex: 0, field: 'isCorrect', value: !question?.options[0]?.isCorrect })
+                                                handleChange({ target: { name: `questions.${index}.options.${0}.isCorrect`, value: !question?.options[0]?.isCorrect } })
                                             }
                                         }
                                         }
@@ -93,12 +93,12 @@ const OptionsComponent = (props) => {
                                             const isChanged = handleIsChanges({ optionIndex: 0, field: 'isCorrect', value: e.target.value })
                                             if (isChanged) {
                                                 if (question.options[0]?.optionId) {
-                                                    console.log(question, question.options[0])
-                                                    handleUpdateOption(question.questionId, question.options[0]);
+                                                    console.log(question, question?.options[0])
+                                                    handleUpdateOption(question.questionId, question?.options[0]);
                                                     setIsFieldChanged({ ...isFieldChanged, [0]: false });
                                                     setIsEditMode({ ...isEditMode, [0]: false });
                                                 } else {
-                                                    handleCreateOption(question.questionId, question.options[0]);
+                                                    handleCreateOption(question?.questionId, question?.options[0]);
                                                     setIsFieldChanged({ ...isFieldChanged, [0]: false });
                                                     setIsEditMode({ ...isEditMode, [0]: false });
                                                 }
@@ -112,14 +112,7 @@ const OptionsComponent = (props) => {
                                             <FontAwesomeIcon icon={faEdit} />
                                         </button>
                                     }
-                                    {/* {isFieldChanged[optionIndex] &&
-                                        <button type="button" className="btn-add-option add-option-button" title="Save Option" onClick={() => {
-                                            handleUpdateOption(question, option)
-                                            setIsEditMode({ ...isEditMode, [optionIndex]: !isEditMode[optionIndex] });
-                                        }}>
-                                            <FontAwesomeIcon icon={faSave} />
-                                        </button>
-                                    } */}
+
                                     {isEditMode[0] &&
                                         <button type="button" className="btn-cancel" title="Cancel Edit" onClick={() => {
                                             handleIsChanges({ optionIndex: 0, isReset: true });
@@ -144,13 +137,13 @@ const OptionsComponent = (props) => {
                                         onBlur={(e) => {
                                             const isChanged = handleIsChanges({ optionIndex: 1, field: 'optionText', value: e.target.value })
                                             if (isChanged) {
-                                                if (question.options[1]?.optionId) {
-                                                    console.log(question, question.options[1])
-                                                    handleUpdateOption(question.questionId, question.options[1]);
+                                                if (question?.options[1]?.optionId) {
+                                                    console.log(question, question?.options[1])
+                                                    handleUpdateOption(question?.questionId, question?.options[1]);
                                                     setIsFieldChanged({ ...isFieldChanged, [1]: false });
                                                     setIsEditMode({ ...isEditMode, [1]: false });
                                                 } else {
-                                                    handleCreateOption(question.questionId, question.options[1]);
+                                                    handleCreateOption(question?.questionId, question?.options[1]);
                                                     setIsFieldChanged({ ...isFieldChanged, [1]: false });
                                                     setIsEditMode({ ...isEditMode, [1]: false });
                                                 }
@@ -159,23 +152,23 @@ const OptionsComponent = (props) => {
                                     />
                                     <Field type="checkbox" disabled={!isEditMode[1]} name={`questions.${index}.options.1.isCorrect`}
                                         onChange={(e) => {
-                                            const isValidated = validateOptions(question, question.options[1], 'isCorrect', !question.options[1].isCorrect);
+                                            const isValidated = validateOptions(question, question?.options[1], 'isCorrect', !question?.options[1]?.isCorrect);
                                             if (isValidated) {
 
-                                                handleIsChanges({ optionIndex: 1, field: 'isCorrect', value: !question.options[1].isCorrect })
-                                                handleChange({ target: { name: `questions.${index}.options.${1}.isCorrect`, value: !question.options[1].isCorrect } })
+                                                handleIsChanges({ optionIndex: 1, field: 'isCorrect', value: !question?.options[1]?.isCorrect })
+                                                handleChange({ target: { name: `questions.${index}.options.${1}.isCorrect`, value: !question?.options[1]?.isCorrect } })
                                             }
                                         }
                                         }
                                         onBlur={(e) => {
                                             const isChanged = handleIsChanges({ optionIndex: 1, field: 'isCorrect', value: e.target.value })
                                             if (isChanged) {
-                                                if (question.options[1]?.optionId) {
-                                                    handleUpdateOption(question.questionId, question.options[1]);
+                                                if (question?.options[1]?.optionId) {
+                                                    handleUpdateOption(question?.questionId, question?.options[1]);
                                                     setIsFieldChanged({ ...isFieldChanged, [1]: false });
                                                     setIsEditMode({ ...isEditMode, [1]: false });
                                                 } else {
-                                                    handleCreateOption(question.questionId, question.options[1]);
+                                                    handleCreateOption(question?.questionId, question?.options[1]);
                                                     setIsFieldChanged({ ...isFieldChanged, [1]: false });
                                                     setIsEditMode({ ...isEditMode, [1]: false });
                                                 }
@@ -210,11 +203,108 @@ const OptionsComponent = (props) => {
                             </>
                         )}
                     </FieldArray>
+
+                    <FieldArray name={`questions.${index}.options`}>
+                        {({ push: pushOption, remove: removeOption }) => {
+
+                            return (
+                                <>
+
+                                    {question.options?.map((option, optionIndex) => (
+                                        <div className="option-item" key={option?.optionText}>
+                                            <Field
+                                                type="text"
+                                                id={`questions.${index}.options.${optionIndex}.optionText`}
+                                                name={`questions.${index}.options.${optionIndex}.optionText`}
+                                                placeholder={`Option ${optionIndex + 1}`}
+                                                disabled={!isEditMode[0]}
+                                                onChange={(e) => {
+                                                    handleIsChanges({ optionIndex: optionIndex, field: 'optionText', value: e.target.value })
+                                                    handleChange({ target: { name: `questions.${index}.options.${optionIndex}.optionText`, value: e.target.value } })
+                                                }
+                                                }
+                                                onBlur={(e) => {
+                                                    const isChanged = handleIsChanges({ optionIndex: optionIndex, field: 'optionText', value: e.target.value })
+                                                    if (isChanged) {
+                                                        if (question.options[optionIndex]?.optionId) {
+                                                            console.log(question, question.options[optionIndex])
+                                                            handleUpdateOption(question.questionId, question.options[optionIndex]);
+                                                            setIsFieldChanged({ ...isFieldChanged, [optionIndex]: false });
+                                                            setIsEditMode({ ...isEditMode, [optionIndex]: false });
+                                                        } else {
+                                                            handleCreateOption(question.questionId, question.options[optionIndex]);
+                                                            setIsFieldChanged({ ...isFieldChanged, [optionIndex]: false });
+                                                            setIsEditMode({ ...isEditMode, [optionIndex]: false });
+                                                        }
+                                                    }
+                                                }}
+                                            />
+                                            <div className="form-row is-correct-switch-toggle form-group">
+                                                <span className="switch-label">Correct</span>
+                                                    <Field type="checkbox" disabled={!isEditMode[optionIndex]} name={`questions.${index}.options.${optionIndex}.isCorrect`}
+                                                        onChange={(e) => {
+                                                            const isValidated = validateOptions(question, question?.options[optionIndex], 'isCorrect', !question?.options[optionIndex]?.isCorrect);
+                                                            if (isValidated) {
+
+                                                                handleIsChanges({ optionIndex: 1, field: 'isCorrect', value: !question?.options[optionIndex]?.isCorrect })
+                                                                handleChange({ target: { name: `questions.${index}.options.${1}.isCorrect`, value: !question?.options[optionIndex]?.isCorrect } })
+                                                            }
+                                                        }
+                                                        }
+                                                        onBlur={(e) => {
+                                                            const isChanged = handleIsChanges({ optionIndex: optionIndex, field: 'isCorrect', value: e.target.value })
+                                                            if (isChanged) {
+                                                                if (question?.options[optionIndex]?.optionId) {
+                                                                    handleUpdateOption(question?.questionId, question?.options[1]);
+                                                                    setIsFieldChanged({ ...isFieldChanged, [optionIndex]: false });
+                                                                    setIsEditMode({ ...isEditMode, [optionIndex]: false });
+                                                                } else {
+                                                                    handleCreateOption(question?.questionId, question?.options[optionIndex]);
+                                                                    setIsFieldChanged({ ...isFieldChanged, [optionIndex]: false });
+                                                                    setIsEditMode({ ...isEditMode, [optionIndex]: false });
+                                                                }
+                                                            }
+                                                        }} />
+                                                    <label>Correct</label>
+                                                    {!isEditMode[optionIndex] &&
+                                                        <button type="button" className="btn-add-option add-option-button" title='Edit Option' onClick={() => {
+                                                            setIsEditMode({ ...isEditMode, [optionIndex]: !isEditMode[optionIndex] });
+                                                        }}>
+                                                            <FontAwesomeIcon icon={faEdit} />
+                                                        </button>
+                                                    }
+                                                    {/* {isFieldChanged[1] &&
+                                        <button type="button" className="btn-add-option add-option-button" title="Save Option" onClick={() => {
+                                            handleUpdateOption(question, question.options[1])
+                                            setIsEditMode({ ...isEditMode, [1]: !isEditMode[1] });
+                                        }}>
+                                            <FontAwesomeIcon icon={faSave} />
+                                        </button>
+                                    } */}
+                                                    {isEditMode[optionIndex] &&
+                                                        <button type="button" className="btn-cancel" title="Cancel Edit" onClick={() => {
+                                                            handleIsChanges({ optionIndex: optionIndex, isReset: true });
+                                                            setIsEditMode({ ...isEditMode, [optionIndex]: !isEditMode[optionIndex] });
+                                                        }}>
+                                                            <FontAwesomeIcon icon={faTimes} />
+                                                        </button>
+                                                    }
+                                            </div>
+                                    ))}
+                                            {question.options.length < 2
+                                                &&
+                                                (
+                                                    <button type="button" className="btn-add-option add-option-button" onClick={() => pushOption({ optionText: '', isCorrect: false })}> Add Option </button>
+                                                )}
+                                        </>
+                                    );
+                        }}
+                                </FieldArray >
                 </div>
             )}
 
             {/* Disable options for other types */}
-            {['ESSAY', 'BLANK', 'SHORT'].includes(question.questionType) && (
+            {['ESSAY', 'BLANK', 'SHORT'].includes(question?.questionType) && (
                 <div className="options-disabled">
                     <p>Options are not applicable for this question type.</p>
                 </div>
@@ -222,12 +312,12 @@ const OptionsComponent = (props) => {
 
 
             {/* Options Section */}
-            {['MCQ', 'MSQ'].includes(question.questionType) && (<div className="options-container">
+            {['MCQ', 'MSQ'].includes(question?.questionType) && (<div className="options-container">
                 <h4>Options</h4>
                 <FieldArray name={`questions.${index}.options`}>
                     {({ push: pushOption, remove: removeOption }) => (
                         <>
-                            {question.options.map((option, optionIndex) => (
+                            {question?.options?.map((option, optionIndex) => (
                                 <div className="option-item" key={optionIndex}>
                                     <div className="form-group option-text">
                                         <Field
@@ -246,11 +336,11 @@ const OptionsComponent = (props) => {
                                                 if (isChanged) {
                                                     if (option?.optionId) {
                                                         console.log(question, option)
-                                                        handleUpdateOption(question.questionId, option);
+                                                        handleUpdateOption(question?.questionId, option);
                                                         setIsFieldChanged({ ...isFieldChanged, [optionIndex]: false });
                                                         setIsEditMode({ ...isEditMode, [optionIndex]: false });
                                                     } else {
-                                                        handleCreateOption(question.questionId, option);
+                                                        handleCreateOption(question?.questionId, option);
                                                         setIsFieldChanged({ ...isFieldChanged, [optionIndex]: false });
                                                         setIsEditMode({ ...isEditMode, [optionIndex]: false });
                                                     }
@@ -266,7 +356,7 @@ const OptionsComponent = (props) => {
                                                 type="checkbox"
                                                 disabled={!isEditMode[optionIndex]}
                                                 name={`questions.${index}.options.${optionIndex}.isCorrect`}
-                                                checked={option.isCorrect}
+                                                checked={option?.isCorrect}
                                                 onBlur={(e) => {
                                                     const isChanged = handleIsChanges({ optionIndex: optionIndex, field: 'isCorrect', value: e.target.checked })
                                                     if (isChanged) {
@@ -325,7 +415,7 @@ const OptionsComponent = (props) => {
                                     }
                                     <button type="button" className="btn-remove-option remove-option-button" title='Delete Option' onClick={() => {
                                         if (option.optionId) {
-                                            handleDeleteOption(question.questionId, option?.optionId);
+                                            handleDeleteOption(question?.questionId, option?.optionId);
                                         }
                                         removeOption(optionIndex);
                                     }
@@ -337,8 +427,8 @@ const OptionsComponent = (props) => {
                             <div className='form-group no-question-add-question'>
                                 <button type="button" className="btn-add-question add-question-button"
                                     onClick={() => {
-                                        handleCreateOption(question.questionId, { optionText: '', isCorrect: false, isEdit: true })
-                                        setIsEditMode({ ...isEditMode, [question.options.length]: !isEditMode[question.options.length] });
+                                        handleCreateOption(question?.questionId, { optionText: '', isCorrect: false, isEdit: true })
+                                        setIsEditMode({ ...isEditMode, [question?.options?.length]: !isEditMode[question?.options?.length] });
                                         pushOption({ optionText: '', isCorrect: false })
                                     }}>
                                     Add Options

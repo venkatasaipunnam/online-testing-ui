@@ -7,10 +7,12 @@ import './CreateTestPage.css';
 import { createExam, createQuestion, createOption } from '../../redux/actions/ExamActions';
 import { useState } from 'react';
 import { toast } from 'react-toastify';
+import { LoadingPage } from '../Loading/Loading';
+import Spinner from '../Common/Spinner/Spinner';
 
 const CreateTestPage = () => {
 
-  const [Submitting, setSubmitting] = useState(false);
+  const [submitting, setSubmitting] = useState(false);
   const initialValues = {
     title: '',
     description: '',
@@ -87,6 +89,10 @@ const CreateTestPage = () => {
     }
     return true;
   };
+
+  if (submitting) {
+    return <LoadingPage />
+  }
 
   return (
     <div className="exam-create-container">
@@ -174,7 +180,7 @@ const CreateTestPage = () => {
                 {({ push, remove }) => (
                   <>
                     {values.questions.length < 1 && (<div className='column-fields'><p>No questions added yet. Click the button to add a new question.</p>
-                      <button className="btn btn-primary add-question-button" onClick={() => push({ questionTitle: '', questionDetails: '', questionType: 'MCQ', points: 0, options: [{ optionText: '', isCorrect: false }] })} > Add Question </button>
+                      <button className="btn btn-primary add-question-button" onClick={() => push({ questionTitle: '', questionDetails: '', questionType: 'MCQ', points: 0, options: [] })} > Add Question </button>
                     </div>)}
 
                     {values.questions.map((question, index) => (
@@ -220,55 +226,60 @@ const CreateTestPage = () => {
                           <div className="options-container">
                             <h4>Options</h4>
                             <FieldArray name={`questions.${index}.options`}>
-                              {({ push: pushOption, remove: removeOption }) => (
-                                <>
-                                  <div className="option-item" key="true">
-                                    <Field type="text" id={`questions.${index}.options.0.optionText`} name={`questions.${index}.options.0.optionText`} placeholder="True" />
-                                    <div className="form-row is-correct-switch-toggle form-group">
-                                      <span className="switch-label">Correct</span>
-                                      <label className="custom-switch" data-automation-id="toggle-iscorrect">
+                              {({ push: pushOption, remove: removeOption }) => {
+
+                                return (
+                                  <>
+
+                                    {question.options?.map((option, optionIndex) => (
+                                      <div className="option-item" key={option?.optionText}>
                                         <Field
-                                          type="checkbox"
-                                          name={`questions.${index}.options.0.isCorrect`}
-                                          checked={question?.options[0]?.isCorrect}
-                                          value={question?.options[0]?.optionText ? question.options[0]?.optionText : 'True'}
-                                          onChange={(e) => {
-                                            const isValidated = validateOptions(question, question.options[0], 'isCorrect', e.target.checked)
-                                            if (isValidated) {
-                                              handleChange({ target: { name: `questions.${index}.options.0.isCorrect`, value: e.target.checked } })
-                                            }
-                                          }
-                                          }
-                                          data-automation-id="option_iscorrect-toggle-input"
+                                          type="text"
+                                          id={`questions.${index}.options.${optionIndex}.optionText`}
+                                          name={`questions.${index}.options.${optionIndex}.optionText`}
+                                          placeholder={`Option ${optionIndex + 1}`}
                                         />
-                                        <span className="custom-slider"></span>
-                                      </label>
-                                    </div>
-                                  </div>
-                                  <div className="option-item" key="false">
-                                    <Field type="text" id={`questions.${index}.options.1.optionText`} name={`questions.${index}.options.1.optionText`} placeholder="False" />
-                                    <div className="form-row is-correct-switch-toggle form-group">
-                                      <span className="switch-label">Correct</span>
-                                      <label className="custom-switch" data-automation-id="toggle-iscorrect">
-                                        <Field
-                                          type="checkbox"
-                                          name={`questions.${index}.options.1.isCorrect`}
-                                          checked={question?.options[1]?.isCorrect}
-                                          onChange={(e) => {
-                                            const isValidated = validateOptions(question, question.options[1], 'isCorrect', e.target.checked)
-                                            if (isValidated) {
-                                              handleChange({ target: { name: `questions.${index}.options.1.isCorrect`, value: e.target.checked } })
-                                            }
-                                          }
-                                          }
-                                          data-automation-id="option_iscorrect-toggle-input"
-                                        />
-                                        <span className="custom-slider"></span>
-                                      </label>
-                                    </div>
-                                  </div>
-                                </>
-                              )}
+                                        <div className="form-row is-correct-switch-toggle form-group">
+                                          <span className="switch-label">Correct</span>
+                                          <label className="custom-switch" data-automation-id="toggle-iscorrect">
+                                            <Field
+                                              type="checkbox"
+                                              name={`questions.${index}.options.${optionIndex}.isCorrect`}
+                                              checked={!!option.isCorrect}
+                                              onChange={(e) => {
+                                                const isValidated = validateOptions(
+                                                  question,
+                                                  option,
+                                                  "isCorrect",
+                                                  e.target.checked
+                                                );
+                                                if (isValidated) {
+                                                  handleChange({
+                                                    target: {
+                                                      name: `questions.${index}.options.${optionIndex}.isCorrect`,
+                                                      value: e.target.checked,
+                                                    },
+                                                  });
+                                                }
+                                              }}
+                                              data-automation-id={`option_${option.optionText.toLowerCase()}-toggle-input`}
+                                            />
+                                            <span className="custom-slider"></span>
+                                          </label>
+                                        </div>
+                                        <button type="button" className="btn-remove-option remove-option-button" onClick={() => removeOption(optionIndex)}>
+                                          <FontAwesomeIcon icon={faTimes} />
+                                        </button>
+                                      </div>
+                                    ))}
+                                    {question.options.length < 2
+                                      &&
+                                      (
+                                        <button type="button" className="btn-add-option add-option-button" onClick={() => pushOption({ optionText: '', isCorrect: false })}> Add Option </button>
+                                      )}
+                                  </>
+                                );
+                              }}
                             </FieldArray>
                           </div>
                         )}
@@ -333,7 +344,7 @@ const CreateTestPage = () => {
                         )}
                         <div className='form-group add-questions-column-fields'>
                           <button type="button" className="btn-add-question add-question-button"
-                            onClick={() => push({ questionTitle: '', questionDetails: '', questionType: 'MCQ', points: 0, options: [{ optionText: '', isCorrect: false }] })}>
+                            onClick={() => push({ questionTitle: '', questionDetails: '', questionType: 'MCQ', points: 0, options: [] })}>
                             Add Question
                           </button>
                         </div>
@@ -347,7 +358,12 @@ const CreateTestPage = () => {
             </div >
 
             <button type="submit" className="btn-save create-exam-button">
-              <FontAwesomeIcon icon={faSave} /> {` Save Exam`}
+              {submitting ? (
+                <Spinner size="20px" color="#fff" />
+              ) : (
+                <><FontAwesomeIcon icon={faSave} />{` Save Exam`}</>
+              )}
+
             </button>
 
           </Form >

@@ -104,6 +104,7 @@
   .option-item .form-group {
     flex-grow: 1;
     margin-right: 16px;
+    margin-bottom: 0px;
   }
   
   .btn-remove-option,
@@ -236,6 +237,16 @@
     max-width: max-content;
     align-items: center;
     align-self: end;
+    background-color: #28a745; /* Green for add option */
+    color: #fff;
+    border: none;
+    border-radius: 10px;
+  }
+
+  .create-exam:hover {
+    background-color: #21c346; /* Green for add option */
+    cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
   }
 
   .option-text{

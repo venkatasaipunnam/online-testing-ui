@@ -64,14 +64,8 @@ const UpdateExamComponent = (props) => {
                             }} />
                         }
                         {isEditMode && <FontAwesomeIcon icon={faSave} className="btn-add-option save-question-button" title="Save Exam" onClick={() => {
-                            handleIsChanges({ updatedExam: values })
-                            if (isFieldChanged) {
-                                if (exam?.examId) {
-                                    handleUpdateExam(values);
-                                    setIsFieldChanged(false);
-                                }
-                            }
-                            setIsEditMode(false)
+                            handleUpdateExam(values);
+                            setIsEditMode(false);
                         }}
                         />
                         }

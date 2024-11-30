@@ -7,19 +7,26 @@ import { faSave } from '@fortawesome/free-regular-svg-icons';
 
 const ExamTakingPage = (props) => {
     const { examSession, exam, saveUserResponse, finishExam } = props;
-    const [timeLeft, setTimeLeft] = useState(exam.duration * 60);
+    const [timeLeft, setTimeLeft] = useState(parseInt((new Date(examSession?.endTime) - Date.now()) / (1000)))
     const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
     const [userResponses, setUserResponses] = useState(examSession?.userResponses.reduce((acc, response) => {
-        acc[response.questionId] = response.optionId || response.answerResponse;
+        acc[response.questionId] = [response.optionId] || response.answerResponse;
         return acc;
       }, {}));
+
+    console.log(userResponses)
 
     useEffect(() => {
         const timerInterval = setInterval(() => {
             setTimeLeft(prevTime => {
-                if (prevTime <= 1) {
+                if (prevTime == 180) {
                     clearInterval(timerInterval);
                     toast.warning('Time is up! Your responses are being submitted.');
+                    return prevTime - 1;
+                }
+                if(prevTime <= 1) {
+                    toast.warning('Time is almost up! Auto submitting your responses.');
+                    handleSubmit();
                     return 0;
                 }
                 return prevTime - 1;
@@ -82,10 +89,9 @@ const ExamTakingPage = (props) => {
                     examId: examSession?.exam?.examId,
                     questionId: questionId,
                     msqOptions: response,
-                    answerResponse: '', // Assuming no answer text for options
+                    answerResponse: '',
                 };
-                saveUserResponse(payload); // API call for each optionId
-            // });
+                saveUserResponse(payload); 
             }
         } else {
             // Single response scenario (string or single optionId)
@@ -96,7 +102,6 @@ const ExamTakingPage = (props) => {
             };
             saveUserResponse(payload);
         }
-        toast.success('Response saved successfully!');
     };
 
     const navigateToQuestion = (index) => {
@@ -126,7 +131,6 @@ const ExamTakingPage = (props) => {
 
     const handleSubmit = () => {
         finishExam(exam.examId);
-        toast.success('Test submitted successfully!');
     };
 
     if (!examSession) {
