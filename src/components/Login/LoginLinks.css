@@ -1,0 +1,12 @@
+
+.links-container {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 2rem;
+    height: 10px;
+}
+
+.first-time-user,
+.forgot-password {
+    margin-right: 10px;
+}

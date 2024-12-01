@@ -1,0 +1,14 @@
+.view-exam-grades-highlights {
+    display: flex;
+    justify-content: space-evenly;
+}
+
+.view-exam-grades-highlight-label {
+    margin-bottom: 5px;
+}
+
+.table-header, .table-body-rows{
+    display: flex;
+    justify-content: space-between;
+    min-width: 50px;
+}

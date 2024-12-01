@@ -1,0 +1,317 @@
+input[type="number"]::-webkit-inner-spin-button,
+  input[type="number"]::-webkit-outer-spin-button {
+      -webkit-appearance: none;
+      margin: 0;
+  }
+
+.exam-create-container {
+    min-width: 800px;
+    margin: 0 auto;
+    padding: 40px;
+    background-color: #fff;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+  }
+  
+  .exam-create-container h1 {
+    font-size: 28px;
+    font-weight: 600;
+    margin-bottom: 16px;
+  }
+  
+  .exam-create-container p {
+    font-size: 16px;
+    color: #555;
+    margin-bottom: 24px;
+  }
+  
+  .exam-details-container,
+  .questions-container {
+    margin-bottom: 40px;
+  }
+  
+  .exam-details-container h2,
+  .questions-container h2 {
+    font-size: 24px;
+    font-weight: 600;
+    margin-bottom: 16px;
+    border-bottom: 2px solid #007bff;
+    padding-bottom: 8px;
+  }
+  
+  .exam-details-container {
+    display: flex;
+    flex-wrap: wrap; /* Allow wrapping to the next line */
+    gap: 5px; /* Space between fields */
+  }
+
+  .exam-details-list {
+    
+    align-items: center;
+  }
+  
+  .form-group {
+    flex: 1 1 45%; /* Allow each form group to take 45% of the container width */
+    min-width: 300px; /* Ensure a minimum width */
+  }
+  
+  .form-group label {
+    display: block;
+    font-size: 14px;
+    font-weight: 500;
+    margin-bottom: 8px;
+  }
+  
+  .form-group input,
+  .form-group textarea,
+  .form-group select {
+    width: 100%;
+    padding: 12px 16px;
+    font-size: 16px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    box-sizing: border-box;
+    transition: border-color 0.2s;
+  }
+  
+  .form-group input:focus,
+  .form-group textarea:focus,
+  .form-group select:focus {
+    border-color: #007bff;
+    outline: none;
+  }
+  
+  .questions-container .question-item {
+    background-color: #f8f8f8;
+    padding: 24px;
+    border-radius: 8px;
+    margin-bottom: 16px;
+  }
+  
+  .options-container {
+    margin-top: 12px;
+  }
+  
+  .options-container h4 {
+    font-size: 20px;
+    font-weight: 600;
+    margin-bottom: 16px;
+  }
+  
+  .option-item {
+    background-color: #fff;
+    padding: 16px;
+    border-radius: 8px;
+    margin-bottom: 16px;
+    display: flex;
+    align-items: center;
+  }
+  
+  .option-item .form-group {
+    flex-grow: 1;
+    margin-right: 16px;
+    margin-bottom: 0px;
+  }
+  
+  .btn-remove-option,
+  .btn-remove-question,
+  .btn-add-option,
+  .btn-add-question,
+  .btn-save,
+  .btn-cancel {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 8px 12px;
+    font-size: 14px;
+    font-weight: 500;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+  }
+  
+  .btn-remove-option,
+  .btn-remove-question,
+  .btn-cancel {
+    background-color: #dc3545; /* Red for remove buttons */
+    color: #fff;
+    border: none;
+  }
+  
+  .btn-remove-option:hover,
+  .btn-remove-question:hover,
+  .btn-cancel:hover {
+    background-color: #c82333;
+  }
+  
+  .btn-add-option {
+    background-color: #28a745; /* Green for add option */
+    color: #fff;
+    border: none;
+  }
+  
+  .btn-add-option:disabled {
+    background-color: #98ae9d; /* Green for add option */
+    color: #fff;
+    border: none;
+  }
+
+  .btn-add-option:disabled:hover {
+    background-color: #98ae9d;
+    cursor: not-allowed;
+  }
+  
+  .btn-add-option:hover {
+    background-color: #218838;
+  }
+  
+  .btn-add-question {
+    background-color: #007bff; /* Blue for add question */
+    color: #fff;
+    border: none;
+  }
+  
+  .btn-add-question:hover {
+    background-color: #0069d9;
+  }
+  
+  .btn-save {
+    background-color: #007bff; /* Blue for save */
+    color: #fff;
+    font-size: 16px;
+    cursor: pointer;
+    width: max-content;
+    padding: 10px;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+  }
+  
+  .btn-save:hover {
+    background-color: #0069d9;
+  }
+  
+  .btn-remove-option .fa-icon,
+  .btn-remove-question .fa-icon,
+  .btn-add-option .fa-icon,
+  .btn-add-question .fa-icon,
+  .btn-save .fa-icon {
+    margin-right: 8px; /* Space between icon and text */
+  }
+
+  .exam-details-container {
+    display: flex;
+    flex-direction: column; /* Stack items vertically */
+    gap: 5px; /* Space between fields */
+  }
+  
+  .exam-details-container .form-group {
+    width: 100%; /* Full width for each form group */
+  }
+
+  .switch-toggle-auto-grade {
+    display: flex;
+    align-items: center;
+    place-content: center;
+    margin-bottom: 0px;
+    margin-top: 30px;
+  }
+
+  .is-correct-switch-toggle {
+    display: flex;
+    align-items: center;
+    place-content: center;
+    margin-bottom: 0px;
+    min-width: max-content;
+    max-width: max-content;
+  }
+
+  .remove-option-button, .add-option-button, .save-question-button, .remove-question-button, .edit-question-button, .cancel-question-button {
+    margin-left: 10px;
+    font-size: 16px;
+    cursor: pointer;
+    width: max-content;
+    border-radius: 10cm;
+    height: max-content;
+  }
+
+  .add-question-button, .remove-question-button, .save-question-button {
+    margin-left: 10px;
+    font-size: 16px;
+    cursor: pointer;
+    width: max-content;
+    padding: 10px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+  }
+
+  .create-exam {
+    padding: 10px;
+    max-width: max-content;
+    align-items: center;
+    align-self: end;
+    background-color: #28a745; /* Green for add option */
+    color: #fff;
+    border: none;
+    border-radius: 10px;
+  }
+
+  .create-exam:hover {
+    background-color: #21c346; /* Green for add option */
+    cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+  }
+
+  .option-text{
+    min-width: 70px;
+  }
+
+  .switch-label {
+    font-size: 14px;
+    margin-right: 10px; 
+  }
+
+  .date-row, .column-fields{
+    display: flex;
+    justify-content: space-between;
+  }
+  
+  .date-input {
+    flex: 1; /* Each input takes equal space */
+    margin-right: 10px; /* Space between the two inputs */
+  }
+  
+  .date-input:last-child {
+    margin-right: 0; /* Remove margin from the last input */
+  }
+  
+  .date-input label {
+    display: block; /* Ensure label is above the input */
+    margin-bottom: 5px;
+  }
+
+  .column-fields{
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+  }
+
+  .add-questions-column-fields{
+    display: flex;
+    justify-content: flex-end;
+    gap: 20px;
+  }
+
+  .create-exam-button {
+    width: max-content;
+    justify-self: center;
+  }
+
+  .add-new-question {
+    width: max-content;
+    justify-self: end;
+  }

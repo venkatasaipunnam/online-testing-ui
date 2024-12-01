@@ -1,0 +1,21 @@
+.align-left {
+    text-align: left !important;
+}
+
+.exam-student-response-publish {
+    margin: 15px auto;
+    width: max-content;
+    padding: 10px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.exam-student-response-publish:disabled {
+    background-color: #cccccc;
+    cursor: not-allowed;
+}
