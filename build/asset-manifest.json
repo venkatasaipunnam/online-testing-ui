@@ -1,0 +1,27 @@
+{
+  "files": {
+    "main.css": "/static/css/main.0d2bc005.css",
+    "main.js": "/static/js/main.f0f0aa85.js",
+    "static/js/453.a24e8ea3.chunk.js": "/static/js/453.a24e8ea3.chunk.js",
+    "static/media/fa-solid-900.ttf": "/static/media/fa-solid-900.07ed6d5fa32c1d54af0f.ttf",
+    "static/media/fa-brands-400.ttf": "/static/media/fa-brands-400.0ff70dcbf135d859ebf3.ttf",
+    "static/media/fa-solid-900.woff2": "/static/media/fa-solid-900.93f719f4d62bfa3e748c.woff2",
+    "static/media/fa-brands-400.woff2": "/static/media/fa-brands-400.bb8d5a145e22822103fb.woff2",
+    "static/media/fa-regular-400.ttf": "/static/media/fa-regular-400.17a6e1aebccdbaa39e78.ttf",
+    "static/media/student.jpg": "/static/media/student.11cc8f67abe44fc9c891.jpg",
+    "static/media/instructor.jpg": "/static/media/instructor.935902d1887f6fc921a8.jpg",
+    "static/media/fa-regular-400.woff2": "/static/media/fa-regular-400.bc3722686635b5f86132.woff2",
+    "static/media/exam-grade-icon.jpg": "/static/media/exam-grade-icon.10eb2595d417a00aa56b.jpg",
+    "static/media/results-icon.jpg": "/static/media/results-icon.4c893ba3ad5241645dc4.jpg",
+    "static/media/fa-v4compatibility.ttf": "/static/media/fa-v4compatibility.0f6cb412603527bda691.ttf",
+    "static/media/fa-v4compatibility.woff2": "/static/media/fa-v4compatibility.6cfec8414be20e2c3426.woff2",
+    "index.html": "/index.html",
+    "main.0d2bc005.css.map": "/static/css/main.0d2bc005.css.map",
+    "main.f0f0aa85.js.map": "/static/js/main.f0f0aa85.js.map",
+    "453.a24e8ea3.chunk.js.map": "/static/js/453.a24e8ea3.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.0d2bc005.css",
+    "static/js/main.f0f0aa85.js"
+  ]
+}
