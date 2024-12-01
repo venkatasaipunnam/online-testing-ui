@@ -28,7 +28,7 @@ const ViewExamGrade = (props) => {
             try {
                 const response = await getStudentGrades(examId);
                 dispatch(saveStudentGrades(response));
-                console.log("Exams fetched successfully + ", response);
+
                 setGradesData(response?.data);
                 setStudentsData(response?.data?.studentResults);
                 filterAndMapResponses(response?.data);
@@ -47,7 +47,7 @@ const ViewExamGrade = (props) => {
 
     useEffect(() => {
         if (isLoading) {
-            console.log(feedbacks?.size)
+
             if (studentsData && gradesData) {
                 filterAndMapResponses(gradesData);
             }
@@ -95,7 +95,7 @@ const ViewExamGrade = (props) => {
 
     const filterAndMapResponses = (studentData) => {
 
-        console.log(gradesData)
+
         if (!gradesData) {
             const gradesData = studentData;
         };
@@ -104,7 +104,7 @@ const ViewExamGrade = (props) => {
         const feedbackMap = createFeedbackMap(gradesData?.studentResults[0]?.studentResponses);
         setFeedbacks(feedbackMap)
         setQuestionInfo(questionInfoMap);
-        console.log(questionInfoMap)
+
     };
 
     return isLoading ? (<>Loading ...</>) : (

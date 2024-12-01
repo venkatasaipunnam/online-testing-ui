@@ -66,7 +66,6 @@ const QuestionsComponent = (props) => {
                                                     handleUpdateQuestion(question);
                                                     setIsFieldChanged({});
                                                 } else {
-                                                    console.log("Creating new question");
                                                     handleCreateQuestion(question);
                                                     setIsFieldChanged({});
                                                 }

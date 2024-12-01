@@ -61,7 +61,6 @@ const UpdateExamContainer = () => {
     }, [isLoading, dispatch]);
 
     const validateExam = (values) => {
-        console.log(values);
 
         const errors = {};
         if (values.title.trim().length === 0) {
@@ -97,7 +96,6 @@ const UpdateExamContainer = () => {
             }
         }
         const errors = validateExam(values);
-        console.log(errors);
         if (Object.keys(errors).length === 0) {
             updateExamData();
         }
@@ -206,7 +204,6 @@ const UpdateExamContainer = () => {
     };
 
     const handleDeleteQuestion = (questionId) => {
-        console.log('Deleting Question at index:', questionId);
         const deleteExamQuestion = async () => {
             try {
                 const response = await deleteQuestion(questionId);
@@ -224,7 +221,6 @@ const UpdateExamContainer = () => {
     };
 
     const handleDeleteOption = (questionId, optionId) => {
-        console.log('Deleting Option at question index:',optionId);
         const deleteQuestionOption = async () => {
             try {
                 const response = await deleteOption(optionId);

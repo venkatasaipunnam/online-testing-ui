@@ -22,7 +22,6 @@ const ExamContainer = (props) => {
             try {
                 const response = await getCreatedExamDetails();
                 dispatch(saveExams(response));
-                console.log("Exams fetched successfully + ", response);
                 setExamsData(response.data);
                 setIsLoading(false);
             } catch (error) {
@@ -36,7 +35,6 @@ const ExamContainer = (props) => {
             try {
                 const response = await getAssignedExamDetails();
                 dispatch(saveExams(response));
-                console.log("Exams fetched successfully + ", response);
                 setExamsData(response.data);
             } catch (error) {
                 console.error("Error : ", error);

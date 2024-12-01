@@ -21,7 +21,6 @@ const AssignStudentPage = (props) => {
             try {
                 const response = await getCreatedExamDetails(examId);
                 dispatch(saveExams(response.data));
-                console.log("Exams fetched successfully:", response.data);
                 setExams(response.data);
             } catch (error) {
                 console.error("Error fetching exams:", error);
@@ -50,7 +49,6 @@ const AssignStudentPage = (props) => {
         setSubmitting(true);
         try {
             const response = await assignUserToExams({ ...values, userEmails });
-            console.log('Assigning users to exam:', values);
             toast.success('Users assigned successfully!');
         } catch (error) {
             console.error('Error assigning users:', error);

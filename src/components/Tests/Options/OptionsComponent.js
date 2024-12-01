@@ -79,7 +79,6 @@ const OptionsComponent = (props) => {
                                                 const isChanged = handleIsChanges({ optionIndex: optionIndex, field: 'optionText', value: e.target.value })
                                                 if (isChanged) {
                                                     if (option?.optionId) {
-                                                        console.log(question, option)
                                                         handleUpdateOption(question?.questionId, option);
                                                         setIsFieldChanged({ ...isFieldChanged, [optionIndex]: false });
                                                         setIsEditMode({ ...isEditMode, [optionIndex]: false });

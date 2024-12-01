@@ -3,7 +3,7 @@ import { APP_BASE_URL } from "../../api/BaseUrls";
 import { PreLoginApi } from "../../api/PreLogin";
 
 export const doLogin = async (data) => {
-    console.log('Logging in with:', data, 'to the server : ', APP_BASE_URL, PreLoginApi.LoginEndPoint);
+
     const response = await axios.post(APP_BASE_URL + PreLoginApi.LoginEndPoint, data)
     return response;
 }

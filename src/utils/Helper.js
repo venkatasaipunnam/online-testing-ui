@@ -2,7 +2,7 @@ import Cookies from 'js-cookie'
 
 export const getSessionId = () => {
     const sessionId = Cookies.get('sessionid');
-    console.log('Session ID:', sessionId);
+
     const localSessionId = sessionStorage.getItem('sessionId');
     return localSessionId;
     // return sessionId ? sessionId.replace(/"/g, '') : localSessionId;
@@ -81,7 +81,7 @@ export const getExamProcessedData = (exam) => {
         startIn: startIn
     }
 
-    console.log(examData);
+
 
     // Output object
     return examData;

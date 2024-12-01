@@ -39,7 +39,6 @@ const UpdateExamComponent = (props) => {
                 savedExam.totalPoints !== updatedExam.totalPoints ||
                 savedExam.autoGrade !== updatedExam.autoGrade
             ) {
-                console.log("isupdated")
                 setIsFieldChanged(true);
             } else {
                 setIsFieldChanged(false);

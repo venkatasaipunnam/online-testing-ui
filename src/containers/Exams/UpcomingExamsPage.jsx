@@ -26,10 +26,8 @@ const UpcomingExamsPage = (props) => {
             try {
                 const response = await getCreatedExamDetails();
                 dispatch(saveExams(response));
-                console.log("Exams fetched successfully + ", response);
                 setExamsData(response.data);
                 if (response.data.length > 0) {
-                    console.log("Exams fetched successfully")
                     const sortedExams = response.data
                         .filter(exam => new Date(exam.endTime) > new Date())
                         .slice() // Create a shallow copy to avoid mutating original data
@@ -51,7 +49,6 @@ const UpcomingExamsPage = (props) => {
             try {
                 const response = await getAssignedExamDetails();
                 dispatch(saveExams(response));
-                console.log("Exams fetched successfully + ", response);
                 setExamsData(response.data);
                 if (response.data.length > 0) {
                     const sortedExams = response.data

@@ -23,7 +23,6 @@ const ChangePassword = () => {
         try {
             const response = await changePassword(values);
             if (response.status === 200) {
-                console.log('Password changed successfully');
                 toast.success('Password changed successfully!');
                 setTimeout(() => {
                     toast.info('Redirecting to home page');

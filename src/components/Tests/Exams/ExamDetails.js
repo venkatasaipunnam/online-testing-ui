@@ -28,7 +28,6 @@ const ExamDetails = (props) => {
             try {
                 const response = await getExamDetails(examId);
                 dispatch(saveExam(response));
-                console.log("Exam fetched successfully + ", response);
                 setExam(response.data);
             } catch (error) {
                 console.error("Error : ", error);
@@ -62,7 +61,6 @@ const ExamDetails = (props) => {
             try {
                 const response = await deleteExam(examId);
                 if (response.status === 200) {
-                    console.log("Exam deleted successfully");
                     setExams(exams.filter(e => e.examId !== parseInt(examId)));
                     toast.success("Exam deleted successfully");
                     navigate(`/exams`);

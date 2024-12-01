@@ -24,7 +24,7 @@ const ViewExamGrades = (props) => {
             try {
                 const response = await getUserExamGrades(examId);
                 dispatch(saveExamGrades(response));
-                console.log("Exams fetched successfully + ", response);
+
                 setGradesData(response?.data);
                 setStudentsData(response?.data?.studentResults);
                 setIsLoading(false);
@@ -46,7 +46,7 @@ const ViewExamGrades = (props) => {
     const navigate = useNavigate()
 
     const handleViewGrades = (examSession) => {
-        console.log(examSession)
+
         // Navigate to the exam details page
         navigate(`/exam/${examId}/grade/${examSession}`);
         // Here you could use a router to navigate, e.g., using React Router

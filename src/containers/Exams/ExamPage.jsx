@@ -26,7 +26,6 @@ const ExamPage = (props) => {
             try {
                 const response = await getExamDetails(examId);
                 dispatch(saveExam(response));
-                console.log("Exam fetched successfully + ", response);
                 setExam(response.data);
             } catch (error) {
                 console.error("Error : ", error);
@@ -36,7 +35,6 @@ const ExamPage = (props) => {
             try {
                 const response = await startExam(examId);
                 if (response.status === 200) {
-                    console.log("Exam started successfully + ", response);
                     setExamSession(response?.data?.examSessionId);
                     setExamSessionData(response?.data);
                 } else {
@@ -68,7 +66,6 @@ const ExamPage = (props) => {
             try {
                 const response = await saveUserExamResponse(data);
                 if (response.status === 200) {
-                    console.log(response.data);
                     toast.success("Response saved successfully");
                 } else {
                     console.error("Error during exam taking");
@@ -85,8 +82,6 @@ const ExamPage = (props) => {
             try {
                 const response = await submitExam(data);
                 if (response.status === 200) {
-                    console.log("Exam submitted successfully");
-                    console.log(response.data);
                     toast.success("Exam submitted successfully");
                     navigate(`/home/exam-finished`)
                 } else {

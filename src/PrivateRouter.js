@@ -30,7 +30,6 @@ export const PrivateRouter = () => {
             }
         };
         const isAuthenticated = getSessionId();
-        console.log("isAuthenticated : ", isAuthenticated);
         if (!isAuth && isAuthenticated) {
             fetchUser();
         } else {

@@ -13,7 +13,6 @@ import { faCancel, faCheck } from "@fortawesome/free-solid-svg-icons";
 
 const ExamGradeQuestion = ({ question }) => {
 
-    console.log(question)
   return (
     <Card variant="outlined" sx={{ mb: 3, p: 2 }}>
       <CardContent>

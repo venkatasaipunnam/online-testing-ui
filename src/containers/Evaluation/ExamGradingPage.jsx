@@ -74,7 +74,6 @@ const ExamGradingPage = (props) => {
                     ?.map((res) => res.feedback)
             }));
         });
-        console.log(prevFeedbacks);
     };
 
     useEffect(() => {
@@ -113,7 +112,6 @@ const ExamGradingPage = (props) => {
     const handleSaveFeedback = async (data) => {
         try {
             const response = await saveUserFeedback(data);
-            console.log('Assigning users to exam:', response);
             toast.success('Feedback Saved successfully!');
         } catch (error) {
             console.error('Error:', error);
@@ -124,7 +122,6 @@ const ExamGradingPage = (props) => {
     const handleUpdateFeedback = async (data) => {
         try {
             const response = await updateUserFeedback(data);
-            console.log('Feedback updated:', response);
             toast.success('Feedback Updated Successfully!');
         } catch (error) {
             console.error('Error assigning users:', error);
@@ -182,7 +179,6 @@ const ExamGradingPage = (props) => {
     const handleUserGrades = async () => {
         try {
             const response = await PostStudentExamGrades(examSession);
-            console.log('Feedback updated:', response);
             toast.success('Grades Saved Successfully!');
             if (response.data) {
                 navigate(`/exam/${examId}/feedback`)

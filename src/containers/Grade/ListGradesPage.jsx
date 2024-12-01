@@ -23,10 +23,8 @@ const ListGradesPage = (props) => {
             try {
                 const response = await getCreatedExamDetails();
                 dispatch(saveExams(response));
-                console.log("Exams fetched successfully + ", response);
                 setExamsData(response.data);
                 if (response.data.length > 0) {
-                    console.log("Exams fetched successfully")
                     const sortedExams = response.data
                         .filter(exam => exam.status === 'GRADED')
                         .slice() // Create a shallow copy to avoid mutating original data
@@ -54,7 +52,6 @@ const ListGradesPage = (props) => {
     const navigate = useNavigate()
 
     const handleViewGrades = (examId) => {
-        console.log(examId);
         // Navigate to the exam details page
         navigate(`/exam/${examId}/grades`);
         // Here you could use a router to navigate, e.g., using React Router

@@ -24,7 +24,6 @@ const ExamStudentResponses = (props) => {
             try {
                 const response = await getUserExamResponses(examId);
                 dispatch(saveUserExamResponses(response));
-                console.log("Exams fetched successfully + ", response);
                 setExamsData(response?.data);
                 setStudentsData(response?.data?.respondedUsers);
                 setIsLoading(false);
@@ -54,7 +53,6 @@ const ExamStudentResponses = (props) => {
     const handlePublishResults = async () => {
         try {
             const response = await PublishExamGrades(examId);
-            console.log("Exams fetched successfully + ", response);
             if (response.data) {
                 toast.success("Exam Results Published successfully")
                 navigate(`/exam/${examId}`);

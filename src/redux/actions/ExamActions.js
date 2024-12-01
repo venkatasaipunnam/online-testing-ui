@@ -22,7 +22,7 @@ export const getExamDetails = async (data) => {
 }
 
 export const getCreatedExamDetails = async (data) => {
-    console.log(default_headers)
+
     const response = await axios.get(APP_BASE_URL + ExamApis.getAllCreatedExamsEndPoint, {
         headers: {
             'Content-Type': 'application/json',
@@ -33,7 +33,7 @@ export const getCreatedExamDetails = async (data) => {
 }
 
 export const getAssignedExamDetails = async (data) => {
-    console.log(default_headers)
+
     const response = await axios.get(APP_BASE_URL + ExamApis.getAllAssignedExamsEndPoint, {
         headers: {
             'Content-Type': 'application/json',
@@ -198,7 +198,7 @@ export const getUserExamResponses = async (data) => {
 }
 
 export const getUserExamResponsesBySession = async (examId, examSession) => {
-    console.log(examId, examSession)
+
     const response = await axios.get(APP_BASE_URL + ExamApis.getUserExamResponseByStudent, {
         params: {
             examId: examId,

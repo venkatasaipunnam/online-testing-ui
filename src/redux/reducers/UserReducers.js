@@ -13,7 +13,7 @@ export const userSlice = createSlice({
     initialState: { value: initialState },
     reducers: {
         saveUser: (state, action) => {
-            console.log('Saved user:', action.payload);
+
             state.value.isUserAuthenticated = action.payload.status === 200 ? true : false;
             state.value.user = action.payload.data;
             setSession(JSON.stringify(state?.value?.user?.session?.sessionId));

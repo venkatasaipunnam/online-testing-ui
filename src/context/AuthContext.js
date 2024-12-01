@@ -12,7 +12,7 @@ export const AuthProvider = ({ children }) => {
     const isUserAuthenticated = useSelector((state) => state.user.value.isUserAuthenticated);
 
     const login = (userData) => {
-        console.log('Logged in:', userData);
+
         dispatch(saveUser(userData));
 
         if (userData?.data?.isTempPassword) {

@@ -47,7 +47,6 @@ const SignUp = () => {
                         <Formik
                             initialValues={{ firstName: '', lastName: '', userName: '', emailId: '', userType: 'STUDENT', createPassword: '', confirmPassword: '' }}
                             validationSchema={signUpValidationSchema}
-                            validate={(values) => console.log(values)}
                             onSubmit={handleSubmit}
                         >
                             {({ formikProps }) => (
