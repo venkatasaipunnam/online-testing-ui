@@ -39,7 +39,6 @@ const ExamTakingPage = (props) => {
         const timerInterval = setInterval(() => {
             setTimeLeft(prevTime => {
                 if (prevTime == 180) {
-                    clearInterval(timerInterval);
                     toast.warning('Time is up! Your responses are being submitted.');
                     return prevTime - 1;
                 }

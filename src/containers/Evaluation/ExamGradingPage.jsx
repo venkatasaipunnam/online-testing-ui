@@ -27,6 +27,7 @@ const ExamGradingPage = (props) => {
     const [feedback, setFeedback] = useState(undefined); // State to track feedback for each question
     const [prevFeedbacks, setPrevFeedbacks] = useState({}); // State to track
     const [isFeedbackChanges, setIsFeedbackChanges] = useState({});
+    const [respondentId, setRespondentId] = useState(undefined);
 
     const filterAndMapResponses = (studentSession) => {
         setReceivedPoints(0)
@@ -43,6 +44,7 @@ const ExamGradingPage = (props) => {
         setTotalPoints(examsData.totalPoints);
 
         const respondentId = respondents[0].respondentId;
+        setRespondentId(respondentId);
         const filteredResponses = examsData.studentResponses.filter(
             response => response.studentId === respondentId
         );
@@ -109,6 +111,17 @@ const ExamGradingPage = (props) => {
         }
     }, [isLoading, userResponses, examsData, examSession, examId, feedback]);
 
+
+    useEffect(() => {
+        let sumOfPoints = 0;
+        if (feedback && !isLoading) {
+            Object.values(feedback).forEach(feedbacks => {
+                sumOfPoints += parseFloat(feedbacks?.pointsGained);
+            });
+            setReceivedPoints(sumOfPoints);
+        }
+    }, [feedback])
+
     const handleSaveFeedback = async (data) => {
         try {
             const response = await saveUserFeedback(data);
@@ -155,6 +168,9 @@ const ExamGradingPage = (props) => {
         }));
         if (examsData.isResultsPublished === true) {
             saveQuestionFeedback(question, feedback[question?.questionId]);
+        }
+        if (prevFeedbacks[question.questionId][0] && prevFeedbacks[question.questionId][0]['isCorrect'] !== String(feedback[question.questionId]['isCorrect'])) {
+            setIsFeedbackChanges((prevChanges) => ({ ...prevChanges, [question.questionId]: true }));
         }
     };
 
