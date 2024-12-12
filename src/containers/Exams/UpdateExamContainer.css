@@ -1,0 +1,79 @@
+.no-questions-added {
+    display: flex;
+    align-items: center;
+}
+
+.no-question-add-question {
+    justify-items: end
+}
+
+.cancel-button {
+    color: red;
+}
+
+.btn-cancel {
+    margin-left: 10px;
+    font-size: 16px;
+    cursor: pointer;
+    width: max-content;
+    border-radius: 10cm;
+}
+
+.question-headers {
+    border-radius: 8px;
+    margin-bottom: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.save-question-button,
+.remove-question-button,
+.edit-question-button,
+.cancel-question-button {
+    margin-left: 10px;
+    font-size: 16px;
+    cursor: pointer;
+    width: 20px;
+    border-radius: 10cm;
+    height: 20px;
+    background-color: inherit;
+}
+
+.save-question-button:hover,
+.remove-question-button:hover,
+.edit-question-button:hover,
+.cancel-question-button:hover {
+    background-color: inherit;
+    height: 22px;
+    width: 22px;
+}
+
+
+.edit-question-button {
+    color: #007bff;
+}
+
+.save-question-button {
+  color: #28a745;
+}
+
+.remove-question-button,
+.cancel-question-button {
+    color: #dc3545;
+}
+
+
+.exam-action-control {
+    position: absolute;
+    top: 10px;
+    /* Adjust as needed for spacing from the top */
+    right: 10px;
+    /* Adjust as needed for spacing from the right */
+    padding: 8px 16px;
+    /* Optional: for styling */
+}
+
+.exam-details-container {
+    position: relative;
+}

@@ -1,0 +1,95 @@
+.assign-user-container {
+    padding: 20px;
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    animation: fadeIn 1s;
+    align-self: center;
+    justify-self: center;
+    margin: 50px auto;
+    min-width: 600px;
+    width: 600px;
+}
+  
+  .form-group {
+    margin-bottom: 15px;
+  }
+  
+  label {
+    display: block;
+    margin-bottom: 5px;
+  }
+  
+  input[type="text"],
+  select {
+    width: 100%;
+    /* padding: 8px; */
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }
+  
+  .email-input-container {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    border: 1px solid #ccc;
+    padding: 8px;
+    border-radius: 4px;
+  }
+  
+  .email-tag {
+    background-color: #2d3e50;
+    color: white;
+    padding: 5px 10px;
+    margin: 5px;
+    border-radius: 20px;
+    display: flex;
+    align-items: center;
+  }
+
+  .email-tag:hover {
+    transition: color 0.3s;
+    box-shadow: 0 10px 30px rgba(5, 45, 116, 0.2);
+  }
+  
+  .btn-remove-email {
+    background: none;
+    border: none;
+    color: white;
+    cursor: pointer;
+    margin-left: 5px;
+    font-weight: bold;
+  }
+  
+  .btn-send,
+  .btn-add-email {
+    margin-top: 10px;
+    background-color: #007bff;
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    width: max-content;
+  }
+  
+  .btn-send:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+  }
+
+  .btn-remove-each-email {
+    background: none;
+    border: none;
+    color: #dc3545;
+    cursor: pointer;
+    margin-left: 5px;
+    font-weight: bold;
+  }
+
+  .btn-remove-each-email:hover {
+    color: #c82333;
+    font-weight: bolder;
+    transition: color 0.3s;
+    font-size: larger;
+  }

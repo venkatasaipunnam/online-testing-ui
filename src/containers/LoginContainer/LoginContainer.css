@@ -1,0 +1,47 @@
+/* src/containers/Login/Login.css */
+.login-container {
+    width: 400px;
+    padding: 20px;
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    animation: fadeIn 1s;
+    align-self: center;
+    justify-self: center;
+}
+
+.login {
+    align-items: center;
+    min-height: 96vh;
+}
+
+div {
+    display: grid;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+h2 {
+    text-align: center;
+    color: #333;
+}
+
+@media (max-width: 500px) {
+    .login-container {
+        width: 90%;
+        margin: 50px auto;
+    }
+
+    h2 {
+        font-size: 24px;
+    }
+}

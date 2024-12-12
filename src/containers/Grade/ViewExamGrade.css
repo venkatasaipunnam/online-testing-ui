@@ -1,0 +1,30 @@
+.exam-grading-question-graded-points {
+    font-size: 18px;
+    margin-right: 5px;
+    margin-left: 5px;
+    background-color: #ffffff;
+    padding-left: 10px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    border-radius: 20%;
+    height: max-content;
+    align-self: center;
+}
+
+.view-exam-grades-highlight-label{
+    text-align: center;
+}
+
+.view-exam-grades-show-questions-button {
+    padding: 10px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    margin-top: 20px;
+    width: max-content;
+    justify-self: center;
+}
